@@ -1,12 +1,14 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import AppSidebar from '@/components/AppSidebar.vue'
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+</script>
 
 <template>
-  <section class="h-screen p-6 bg-black">
-    <div class="grid grid-cols-[100px_1fr] h-full bg-white/10 backdrop-blur-xl shadow-2xl shadow-black/50 rounded-3xl">
-      <div>Sibebar</div>
-      <div>
-        <slot />
-      </div>
-    </div>
-  </section>
+  <SidebarProvider>
+    <AppSidebar />
+    <main>
+      <SidebarTrigger />
+      <slot />
+    </main>
+  </SidebarProvider>
 </template>
