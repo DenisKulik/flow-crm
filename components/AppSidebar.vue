@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Home, UsersRound } from 'lucide-vue-next'
+import { Home, UsersRound, UserRound, ChevronUp } from 'lucide-vue-next'
 import {
   Sidebar,
   SidebarContent,
@@ -8,10 +8,11 @@ import {
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem
+  SidebarMenuItem,
+  SidebarFooter
 } from '@/components/ui/sidebar'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 
-// Menu items.
 const items = [
   {
     title: 'Home',
@@ -45,5 +46,28 @@ const items = [
         </SidebarGroupContent>
       </SidebarGroup>
     </SidebarContent>
+    <SidebarFooter>
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <SidebarMenuButton>
+                <UserRound />
+                <span>Username</span>
+                <ChevronUp class="ml-auto" />
+              </SidebarMenuButton>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent side="top" class="w-[--reka-popper-anchor-width]">
+              <DropdownMenuItem>
+                <span>Account</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <span>Log out</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </SidebarMenuItem>
+      </SidebarMenu>
+    </SidebarFooter>
   </Sidebar>
 </template>

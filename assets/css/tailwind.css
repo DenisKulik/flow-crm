@@ -68,7 +68,8 @@
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%}
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
 }
 @layer base {
   * {
@@ -76,5 +77,6 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: Lato, sans-serif;
   }
 }
