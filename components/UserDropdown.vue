@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { UserRound, ChevronUp } from 'lucide-vue-next'
-import { SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar'
+import { ChevronUp, UserRound } from 'lucide-vue-next'
+
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { SidebarMenuButton } from '@/components/ui/sidebar'
 </script>
 
 <template>
   <DropdownMenu>
-    <DropdownMenuTrigger asChild>
+    <DropdownMenuTrigger as-child>
       <SidebarMenuButton>
         <UserRound />
         <span>Username</span>

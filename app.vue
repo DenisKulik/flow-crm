@@ -1,4 +1,6 @@
 <script setup>
+import Toaster from '@/components/ui/toast/Toaster.vue'
+
 useHead({
   htmlAttrs: {
     class: 'dark'
@@ -7,5 +9,9 @@ useHead({
 </script>
 
 <template>
-  <NuxtLayout></NuxtLayout>
+  <Toaster />
+
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>

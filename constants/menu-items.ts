@@ -5,7 +5,7 @@ export interface IMenuItem {
   id: number
   title: string
   url: string
-  icon: FunctionalComponent<LucideProps, {}, any, {}>
+  icon: FunctionalComponent<LucideProps>
 }
 
 export const MENU_ITEMS: IMenuItem[] = [

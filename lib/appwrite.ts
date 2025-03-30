@@ -1,4 +1,5 @@
-import { Client, Account, Databases, Storage } from 'appwrite'
+import { Account, Client, Databases, Storage } from 'appwrite'
+
 import { APP_WRITE_ID } from '~/constants'
 
 export const client = new Client()
