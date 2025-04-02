@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import { vAutoAnimate } from '@formkit/auto-animate/vue'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
 import * as z from 'zod'
+
 import { Button } from '@/components/ui/button'
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/toast/use-toast'
-import { vAutoAnimate } from '@formkit/auto-animate/vue'
 
 useHead({
   title: 'Login | Flow CRM'
@@ -52,7 +53,7 @@ const onSubmit = handleSubmit((values) => {
       <h1 class="mb-5 text-2xl font-bold text-center">Login</h1>
 
       <form class="space-y-3">
-        <FormField :validate-on-blur="!isFieldDirty('email')" v-slot="{ componentField }" name="email">
+        <FormField v-slot="{ componentField }" :validate-on-blur="!isFieldDirty('email')" name="email">
           <FormItem v-auto-animate>
             <FormControl>
               <Input type="email" placeholder="Email" v-bind="componentField" autocomplete="email" />
@@ -60,7 +61,7 @@ const onSubmit = handleSubmit((values) => {
             <FormMessage />
           </FormItem>
         </FormField>
-        <FormField :validate-on-blur="!isFieldDirty('name')" v-slot="{ componentField }" name="name">
+        <FormField v-slot="{ componentField }" :validate-on-blur="!isFieldDirty('name')" name="name">
           <FormItem v-auto-animate>
             <FormControl>
               <Input type="text" placeholder="Name" v-bind="componentField" autocomplete="name" />
@@ -68,7 +69,7 @@ const onSubmit = handleSubmit((values) => {
             <FormMessage />
           </FormItem>
         </FormField>
-        <FormField :validate-on-blur="!isFieldDirty('password')" v-slot="{ componentField }" name="password">
+        <FormField v-slot="{ componentField }" :validate-on-blur="!isFieldDirty('password')" name="password">
           <FormItem v-auto-animate>
             <FormControl>
               <Input type="password" placeholder="Password" v-bind="componentField" autocomplete="current-password" />

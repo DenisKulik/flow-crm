@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SidebarMenu, SidebarMenuButton,SidebarMenuItem } from '@/components/ui/sidebar'
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
 import type { IMenuItem } from '~/constants'
 
 defineProps<{
