@@ -8,6 +8,9 @@ import { Button } from '@/components/ui/button'
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/toast/use-toast'
+import { account } from '~/lib/appwrite'
+import { useAppStore } from '~/store/app.store'
+import { useAuthStore } from '~/store/auth.store'
 
 useHead({
   title: 'Login | Flow CRM'
@@ -17,6 +20,10 @@ definePageMeta({
   layout: 'empty'
 })
 
+const appStore = useAppStore()
+const authStore = useAuthStore()
+const router = useRouter()
+
 const formSchema = toTypedSchema(
   z.object({
     email: z.string().email(),
@@ -25,7 +32,7 @@ const formSchema = toTypedSchema(
   })
 )
 
-const { isFieldDirty, handleSubmit } = useForm({
+const { isFieldDirty, handleSubmit, resetForm } = useForm({
   validationSchema: formSchema,
   initialValues: {
     email: '',
@@ -35,7 +42,40 @@ const { isFieldDirty, handleSubmit } = useForm({
   validateOnMount: false
 })
 
-const onSubmit = handleSubmit((values) => {
+const login = handleSubmit(async (values) => {
+  try {
+    appStore.setLoading(true)
+    const { email, password } = values
+    await account.createEmailPasswordSession(email, password)
+    const user = await account.get()
+
+    if (user) {
+      authStore.setUser({
+        email: user.email,
+        name: user.name,
+        status: true
+      })
+      resetForm()
+      await router.push('/')
+    } else {
+      toast({
+        title: 'Error',
+        description: 'Invalid credentials',
+        variant: 'destructive'
+      })
+    }
+  } catch (error: unknown) {
+    toast({
+      title: 'Error',
+      description: error instanceof Error ? error.message : 'Something went wrong, please try again.',
+      variant: 'destructive'
+    })
+  } finally {
+    appStore.setLoading(false)
+  }
+})
+
+const register = handleSubmit((values) => {
   toast({
     title: 'You submitted the following values:',
     description: h(
@@ -78,8 +118,8 @@ const onSubmit = handleSubmit((values) => {
           </FormItem>
         </FormField>
         <div class="flex items-center justify-center gap-2">
-          <Button type="button" @click="onSubmit">Login</Button>
-          <Button type="button" @click="onSubmit">Register</Button>
+          <Button type="button" @click="login">Login</Button>
+          <Button type="button" @click="register">Register</Button>
         </div>
       </form>
     </div>
