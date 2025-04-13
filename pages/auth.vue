@@ -27,13 +27,25 @@ const router = useRouter()
 const registerForm = useTemplateRef<IFormMethods>('registerForm')
 const loginForm = useTemplateRef<IFormMethods>('loginForm')
 
+const getAuthUser = async () => {
+  try {
+    const user = await account.get()
+    return user
+  } catch {
+    return false
+  }
+}
+
 const login = async (values: IUserForm) => {
   try {
-    appStore.setLoading(true)
+    appStore.startLoading('login')
     const { email, password } = values
-    await account.deleteSession('current')
-    await account.createEmailPasswordSession(email, password)
-    const user = await account.get()
+    let user = await getAuthUser()
+
+    if (!user) {
+      await account.createEmailPasswordSession(email, password)
+      user = await account.get()
+    }
 
     if (user) {
       authStore.setUser({
@@ -57,16 +69,17 @@ const login = async (values: IUserForm) => {
       variant: 'destructive'
     })
   } finally {
-    appStore.setLoading(false)
+    appStore.stopLoading('login')
   }
 }
 
 const register = async (values: IUserForm) => {
   try {
-    appStore.setLoading(true)
+    appStore.startLoading('register')
     const { email, name, password } = values
     const userId = nanoid()
     await account.create(userId, email, password, name)
+    registerForm.value?.resetForm()
     await login(values)
   } catch (error: unknown) {
     toast({
@@ -75,7 +88,7 @@ const register = async (values: IUserForm) => {
       variant: 'destructive'
     })
   } finally {
-    appStore.setLoading(false)
+    appStore.stopLoading('register')
   }
 }
 </script>
@@ -89,7 +102,7 @@ const register = async (values: IUserForm) => {
           <TabsTrigger value="register">Register</TabsTrigger>
         </TabsList>
         <TabsContent value="login">
-          <LoginForm ref="registerForm" @submit="login" />
+          <LoginForm ref="loginForm" @submit="login" />
         </TabsContent>
         <TabsContent value="register">
           <RegisterForm ref="registerForm" @submit="register" />
