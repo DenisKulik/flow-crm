@@ -3,10 +3,10 @@ import { ChevronUp, UserRound } from 'lucide-vue-next'
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { SidebarMenuButton } from '@/components/ui/sidebar'
-import { useAuthStore } from '~/store/auth.store'
 import { toast } from '~/components/ui/toast'
-import { useAppStore } from '~/store/app.store'
 import { account } from '~/lib/appwrite'
+import { useAppStore } from '~/store/app.store'
+import { useAuthStore } from '~/store/auth.store'
 
 const router = useRouter()
 

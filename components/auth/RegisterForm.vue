@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { vAutoAnimate } from '@formkit/auto-animate/vue'
-import { FormControl, FormField, FormItem, FormMessage } from '~/components/ui/form'
-import { Button } from '~/components/ui/button'
-import { Input } from '~/components/ui/input'
 import { toTypedSchema } from '@vee-validate/zod'
-import * as z from 'zod'
 import { useForm } from 'vee-validate'
+import * as z from 'zod'
+
+import { Button } from '~/components/ui/button'
+import { FormControl, FormField, FormItem, FormMessage } from '~/components/ui/form'
+import { Input } from '~/components/ui/input'
 
 const emit = defineEmits(['submit'])
 

@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { nanoid } from 'nanoid'
+
+import { LoginForm, RegisterForm } from '@/components/auth'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { account } from '~/lib/appwrite'
 import { useAppStore } from '~/store/app.store'
 import { useAuthStore } from '~/store/auth.store'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { LoginForm, RegisterForm } from '@/components/auth'
 import type { IUserForm } from '~/types'
-import { nanoid } from 'nanoid'
 import { showErrorToast } from '~/utils'
 
 useHead({ title: 'Login | Flow CRM' })
