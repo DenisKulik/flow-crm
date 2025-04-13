@@ -1,10 +1,6 @@
-interface IAuthStore {
-  email: string
-  name: string
-  status: boolean
-}
+import type { IUser } from '~/types'
 
-const getDefaultState = (): { user: IAuthStore } => ({
+const getDefaultState = (): { user: IUser } => ({
   user: {
     email: '',
     name: '',
@@ -12,18 +8,24 @@ const getDefaultState = (): { user: IAuthStore } => ({
   }
 })
 
-export const useAuthStore = defineStore('auth', () => {
-  const state = ref(getDefaultState())
+export const useAuthStore = defineStore(
+  'auth',
+  () => {
+    const state = ref(getDefaultState())
 
-  const isAuth = computed(() => state.value.user.status)
+    const isAuth = computed(() => state.value.user.status)
 
-  const $reset = () => {
-    state.value = getDefaultState()
+    const $reset = () => {
+      state.value = getDefaultState()
+    }
+
+    const setUser = (user: IUser) => {
+      state.value.user = user
+    }
+
+    return { state, isAuth, $reset, setUser }
+  },
+  {
+    persist: true
   }
-
-  const setUser = (user: IAuthStore) => {
-    state.value.user = user
-  }
-
-  return { state, isAuth, $reset, setUser }
-})
+)
