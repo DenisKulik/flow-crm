@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils'
 import { ToastRoot, type ToastRootEmits, useForwardPropsEmits } from 'reka-ui'
 import { computed } from 'vue'
+
+import { cn } from '@/lib/utils'
+
 import { type ToastProps, toastVariants } from '.'
 
 const props = defineProps<ToastProps>()
@@ -18,11 +20,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 </script>
 
 <template>
-  <ToastRoot
-    v-bind="forwarded"
-    :class="cn(toastVariants({ variant }), props.class)"
-    @update:open="onOpenChange"
-  >
+  <ToastRoot v-bind="forwarded" :class="cn(toastVariants({ variant }), props.class)" @update:open="onOpenChange">
     <slot />
   </ToastRoot>
 </template>
