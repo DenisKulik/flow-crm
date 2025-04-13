@@ -3,6 +3,33 @@ import { ChevronUp, UserRound } from 'lucide-vue-next'
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { SidebarMenuButton } from '@/components/ui/sidebar'
+import { useAuthStore } from '~/store/auth.store'
+import { toast } from '~/components/ui/toast'
+import { useAppStore } from '~/store/app.store'
+import { account } from '~/lib/appwrite'
+
+const router = useRouter()
+
+const authStore = useAuthStore()
+const { state } = storeToRefs(authStore)
+const appStore = useAppStore()
+
+const logout = async () => {
+  try {
+    appStore.startLoading('logout')
+    await account.deleteSession('current')
+    authStore.$reset()
+    await router.push('/auth')
+  } catch (error: unknown) {
+    toast({
+      title: 'Error',
+      description: error instanceof Error ? error.message : 'Something went wrong, please try again.',
+      variant: 'destructive'
+    })
+  } finally {
+    appStore.stopLoading('logout')
+  }
+}
 </script>
 
 <template>
@@ -10,7 +37,7 @@ import { SidebarMenuButton } from '@/components/ui/sidebar'
     <DropdownMenuTrigger as-child>
       <SidebarMenuButton>
         <UserRound />
-        <span>Username</span>
+        <span>{{ state.user.name }}</span>
         <ChevronUp class="ml-auto" />
       </SidebarMenuButton>
     </DropdownMenuTrigger>
@@ -18,7 +45,7 @@ import { SidebarMenuButton } from '@/components/ui/sidebar'
       <DropdownMenuItem>
         <span>Account</span>
       </DropdownMenuItem>
-      <DropdownMenuItem>
+      <DropdownMenuItem @click="logout">
         <span>Log out</span>
       </DropdownMenuItem>
     </DropdownMenuContent>

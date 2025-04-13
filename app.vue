@@ -8,13 +8,20 @@ useHead({
   }
 })
 
+if (import.meta.client) {
+  useAppInit()
+}
+
 const appStore = useAppStore()
-const { isLoading } = storeToRefs(appStore)
+const { isInitialized, isLoading } = storeToRefs(appStore)
 </script>
 
 <template>
   <Toaster />
-  <AppLoader v-show="isLoading" class="fixed inset-0 z-50 flex items-center justify-center bg-background" />
+  <AppLoader
+    v-show="!isInitialized || isLoading"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-background"
+  />
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>

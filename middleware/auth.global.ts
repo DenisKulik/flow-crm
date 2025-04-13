@@ -1,24 +1,15 @@
 import { useAuthStore } from '~/store/auth.store'
 import { account } from '~/lib/appwrite'
 
-export default defineNuxtRouteMiddleware(async (to, from) => {
+export default defineNuxtRouteMiddleware(async (to) => {
   const authStore = useAuthStore()
-  const { state } = storeToRefs(authStore)
-  let isLoginState = state.value.user?.status
+  const { isAuth } = storeToRefs(authStore)
 
-  if (!isLoginState) {
-    const user = await account.get()
-    if (user) {
-      authStore.setUser({
-        email: user.email,
-        name: user.name,
-        status: true
-      })
-      isLoginState = true
-    }
+  if (to.path === '/auth' && isAuth.value) {
+    return navigateTo('/')
   }
 
-  if (to.path !== '/auth' && !isLoginState) {
+  if (to.path !== '/auth' && !isAuth.value) {
     return navigateTo('/auth')
   }
 })

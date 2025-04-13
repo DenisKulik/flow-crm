@@ -1,6 +1,11 @@
 export const useAppStore = defineStore('app', () => {
+  const isInitialized = ref(false)
   const loadingTasks = ref<Set<string>>(new Set())
   const isLoading = computed(() => loadingTasks.value.size > 0)
+
+  const setInitialized = () => {
+    isInitialized.value = true
+  }
 
   const startLoading = (taskId: string) => {
     loadingTasks.value.add(taskId)
@@ -10,5 +15,5 @@ export const useAppStore = defineStore('app', () => {
     loadingTasks.value.delete(taskId)
   }
 
-  return { isLoading, startLoading, stopLoading }
+  return { isInitialized, isLoading, setInitialized, startLoading, stopLoading }
 })

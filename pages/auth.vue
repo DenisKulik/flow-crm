@@ -3,18 +3,13 @@ import { account } from '~/lib/appwrite'
 import { useAppStore } from '~/store/app.store'
 import { useAuthStore } from '~/store/auth.store'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { toast } from '@/components/ui/toast/use-toast'
-import { RegisterForm, LoginForm } from '@/components/auth'
+import { LoginForm, RegisterForm } from '@/components/auth'
 import type { IUserForm } from '~/types'
 import { nanoid } from 'nanoid'
+import { showErrorToast } from '~/utils'
 
-useHead({
-  title: 'Login | Flow CRM'
-})
-
-definePageMeta({
-  layout: 'empty'
-})
+useHead({ title: 'Login | Flow CRM' })
+definePageMeta({ layout: 'empty' })
 
 interface IFormMethods {
   resetForm: () => void
@@ -29,10 +24,9 @@ const loginForm = useTemplateRef<IFormMethods>('loginForm')
 
 const getAuthUser = async () => {
   try {
-    const user = await account.get()
-    return user
+    return await account.get()
   } catch {
-    return false
+    return null
   }
 }
 
@@ -46,28 +40,15 @@ const login = async (values: IUserForm) => {
       await account.createEmailPasswordSession(email, password)
       user = await account.get()
     }
-
-    if (user) {
-      authStore.setUser({
-        email: user.email,
-        name: user.name,
-        status: true
-      })
-      loginForm.value?.resetForm()
-      await router.push('/')
-    } else {
-      toast({
-        title: 'Error',
-        description: 'Invalid credentials',
-        variant: 'destructive'
-      })
-    }
-  } catch (error: unknown) {
-    toast({
-      title: 'Error',
-      description: error instanceof Error ? error.message : 'Something went wrong, please try again.',
-      variant: 'destructive'
+    authStore.setUser({
+      email: user.email,
+      name: user.name,
+      status: true
     })
+    loginForm.value?.resetForm()
+    await router.push('/')
+  } catch (error: unknown) {
+    showErrorToast(error)
   } finally {
     appStore.stopLoading('login')
   }
@@ -82,11 +63,7 @@ const register = async (values: IUserForm) => {
     registerForm.value?.resetForm()
     await login(values)
   } catch (error: unknown) {
-    toast({
-      title: 'Error',
-      description: error instanceof Error ? error.message : 'Something went wrong, please try again.',
-      variant: 'destructive'
-    })
+    showErrorToast(error)
   } finally {
     appStore.stopLoading('register')
   }
