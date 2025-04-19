@@ -7,7 +7,8 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel
 } from '@/components/ui/sidebar'
-import SidebarMenuList from '~/components/SidebarMenuList.vue'
+import SidebarMenuList from '~/components/sidebar/SidebarMenuList.vue'
+import UserDropdown from '~/components/sidebar/UserDropdown.vue'
 import { MENU_ITEMS } from '~/constants'
 </script>
 
