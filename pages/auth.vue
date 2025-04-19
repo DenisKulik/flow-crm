@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import { nanoid } from 'nanoid'
-
 import { LoginForm, RegisterForm } from '@/components/auth'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { account } from '~/lib/appwrite'
-import { useAppStore } from '~/store/app.store'
-import { useAuthStore } from '~/store/auth.store'
-import type { IUserForm } from '~/types'
-import { showErrorToast } from '~/utils'
+import { useAppStore } from '@/store/app.store'
+import type { IUserForm } from '@/types'
+import { showErrorToast } from '@/utils'
 
 useHead({ title: 'Login | Flow CRM' })
 definePageMeta({ layout: 'empty' })
@@ -17,35 +13,17 @@ interface IFormMethods {
 }
 
 const appStore = useAppStore()
-const authStore = useAuthStore()
 const router = useRouter()
+
+const { login, register } = useAuth()
 
 const registerForm = useTemplateRef<IFormMethods>('registerForm')
 const loginForm = useTemplateRef<IFormMethods>('loginForm')
 
-const getAuthUser = async () => {
-  try {
-    return await account.get()
-  } catch {
-    return null
-  }
-}
-
-const login = async (values: IUserForm) => {
+const onLogin = async (values: IUserForm) => {
   try {
     appStore.startLoading('login')
-    const { email, password } = values
-    let user = await getAuthUser()
-
-    if (!user) {
-      await account.createEmailPasswordSession(email, password)
-      user = await account.get()
-    }
-    authStore.setUser({
-      email: user.email,
-      name: user.name,
-      status: true
-    })
+    await login(values)
     loginForm.value?.resetForm()
     await router.push('/')
   } catch (error: unknown) {
@@ -55,14 +33,12 @@ const login = async (values: IUserForm) => {
   }
 }
 
-const register = async (values: IUserForm) => {
+const onRegister = async (values: IUserForm) => {
   try {
     appStore.startLoading('register')
-    const { email, name, password } = values
-    const userId = nanoid()
-    await account.create(userId, email, password, name)
+    await register(values)
     registerForm.value?.resetForm()
-    await login(values)
+    await onLogin(values)
   } catch (error: unknown) {
     showErrorToast(error)
   } finally {
@@ -80,10 +56,10 @@ const register = async (values: IUserForm) => {
           <TabsTrigger value="register">Register</TabsTrigger>
         </TabsList>
         <TabsContent value="login">
-          <LoginForm ref="loginForm" @submit="login" />
+          <LoginForm ref="loginForm" @submit="onLogin" />
         </TabsContent>
         <TabsContent value="register">
-          <RegisterForm ref="registerForm" @submit="register" />
+          <RegisterForm ref="registerForm" @submit="onRegister" />
         </TabsContent>
       </Tabs>
     </div>

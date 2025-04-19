@@ -3,22 +3,21 @@ import { ChevronUp, UserRound } from 'lucide-vue-next'
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { SidebarMenuButton } from '@/components/ui/sidebar'
-import { toast } from '~/components/ui/toast'
-import { account } from '~/lib/appwrite'
-import { useAppStore } from '~/store/app.store'
-import { useAuthStore } from '~/store/auth.store'
+import { toast } from '@/components/ui/toast'
+import { useAppStore } from '@/store/app.store'
+import { useAuthStore } from '@/store/auth.store'
 
 const router = useRouter()
 
+const { logout } = useAuth()
 const authStore = useAuthStore()
 const { state } = storeToRefs(authStore)
 const appStore = useAppStore()
 
-const logout = async () => {
+const onLogout = async () => {
   try {
     appStore.startLoading('logout')
-    await account.deleteSession('current')
-    authStore.$reset()
+    await logout()
     await router.push('/auth')
   } catch (error: unknown) {
     toast({
@@ -45,7 +44,7 @@ const logout = async () => {
       <DropdownMenuItem>
         <span>Account</span>
       </DropdownMenuItem>
-      <DropdownMenuItem @click="logout">
+      <DropdownMenuItem @click="onLogout">
         <span>Log out</span>
       </DropdownMenuItem>
     </DropdownMenuContent>
