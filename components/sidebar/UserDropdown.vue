@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { ChevronUp, UserRound } from 'lucide-vue-next'
 
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { SidebarMenuButton } from '@/components/ui/sidebar'
 import { toast } from '@/components/ui/toast'
 import { useAppStore } from '@/store/app.store'
 import { useAuthStore } from '@/store/auth.store'
@@ -32,21 +30,21 @@ const onLogout = async () => {
 </script>
 
 <template>
-  <DropdownMenu>
-    <DropdownMenuTrigger as-child>
-      <SidebarMenuButton>
+  <UiDropdownMenu>
+    <UiDropdownMenuTrigger as-child>
+      <UiSidebarMenuButton>
         <UserRound />
         <span>{{ state.user.name }}</span>
         <ChevronUp class="ml-auto" />
-      </SidebarMenuButton>
-    </DropdownMenuTrigger>
-    <DropdownMenuContent side="top" class="w-[--reka-popper-anchor-width]">
-      <DropdownMenuItem>
+      </UiSidebarMenuButton>
+    </UiDropdownMenuTrigger>
+    <UiDropdownMenuContent side="top" class="w-[--reka-popper-anchor-width]">
+      <UiDropdownMenuItem>
         <span>Account</span>
-      </DropdownMenuItem>
-      <DropdownMenuItem @click="onLogout">
+      </UiDropdownMenuItem>
+      <UiDropdownMenuItem @click="onLogout">
         <span>Log out</span>
-      </DropdownMenuItem>
-    </DropdownMenuContent>
-  </DropdownMenu>
+      </UiDropdownMenuItem>
+    </UiDropdownMenuContent>
+  </UiDropdownMenu>
 </template>

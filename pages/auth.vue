@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { LoginForm, RegisterForm } from '@/components/auth'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useAppStore } from '@/store/app.store'
 import type { IUserForm } from '@/types'
 import { showErrorToast } from '@/utils'
@@ -50,18 +48,18 @@ const onRegister = async (values: IUserForm) => {
 <template>
   <div class="min-h-screen w-full flex items-center justify-center">
     <div class="w-1/4 p-5 bg-sidebar rounded">
-      <Tabs default-value="login" class="w-[400px]">
-        <TabsList class="grid w-full grid-cols-2">
-          <TabsTrigger value="login">Login</TabsTrigger>
-          <TabsTrigger value="register">Register</TabsTrigger>
-        </TabsList>
-        <TabsContent value="login">
-          <LoginForm ref="loginForm" @submit="onLogin" />
-        </TabsContent>
-        <TabsContent value="register">
-          <RegisterForm ref="registerForm" @submit="onRegister" />
-        </TabsContent>
-      </Tabs>
+      <UiTabs default-value="login" class="w-[400px]">
+        <UiTabsList class="grid w-full grid-cols-2">
+          <UiTabsTrigger value="login">Login</UiTabsTrigger>
+          <UiTabsTrigger value="register">Register</UiTabsTrigger>
+        </UiTabsList>
+        <UiTabsContent value="login">
+          <AuthLoginForm ref="loginForm" @submit="onLogin" />
+        </UiTabsContent>
+        <UiTabsContent value="register">
+          <AuthRegisterForm ref="registerForm" @submit="onRegister" />
+        </UiTabsContent>
+      </UiTabs>
     </div>
   </div>
 </template>
