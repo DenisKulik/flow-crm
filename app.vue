@@ -1,6 +1,6 @@
 <script setup>
 import Toaster from '@/components/ui/toast/Toaster.vue'
-import { useAppStore } from '~/store/app.store.js'
+import { useAppStore } from '~/stores/app.store.js'
 
 useHead({
   htmlAttrs: {
