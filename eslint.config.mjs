@@ -12,11 +12,14 @@ export default withNuxt([
       'vue/multi-word-component-names': 'off',
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
-      "vue/html-self-closing": ["error", {
-        "html": {
-          "void": "always"
+      'vue/html-self-closing': [
+        'error',
+        {
+          html: {
+            void: 'always'
+          }
         }
-      }]
+      ]
     }
   }
 ])
