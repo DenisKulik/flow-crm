@@ -11,6 +11,17 @@
     "lint:eslint": "eslint .",
     "lintfix": "eslint . --fix && prettier --write --list-different ."
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,vue}": [
+      "pnpm run lintfix",
+      "git add"
+    ]
+  },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.2",
     "@nuxtjs/google-fonts": "3.2.0",
@@ -43,6 +54,8 @@
     "eslint-config-prettier": "^10.0.2",
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-simple-import-sort": "^12.1.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.1",
     "prettier": "^3.5.3",
     "typescript": "^5.8.2"
   }
