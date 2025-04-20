@@ -1,4 +1,4 @@
-import type { DealStatus } from './deal'
+import type { DealStatus } from './deals'
 
 export interface ICard {
   id: string

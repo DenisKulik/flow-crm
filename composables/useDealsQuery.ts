@@ -1,15 +1,16 @@
 import { useQuery } from '@tanstack/vue-query'
 
-import { DB } from '@/api/appwrite'
-import { COLLECTION_DEALS, DB_ID } from '@/constants'
+import { DealsService } from '@/api'
 import { dealColumns } from '@/data'
 import type { IDeal } from '@/types'
 import { formatDate, formatPrice } from '@/utils'
 
+const dealsService = new DealsService()
+
 export const useDealsQuery = () => {
   return useQuery({
     queryKey: ['deals'],
-    queryFn: () => DB.listDocuments(DB_ID, COLLECTION_DEALS),
+    queryFn: () => dealsService.getDeals(),
     select(data) {
       const board = structuredClone(dealColumns)
       const deals = data.documents as unknown as IDeal[]

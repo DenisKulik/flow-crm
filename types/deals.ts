@@ -1,3 +1,5 @@
+import type { Models } from 'appwrite'
+
 interface IBaseEntity {
   $id: string
   $createdAt: string
@@ -28,4 +30,11 @@ export interface IDeal extends IBaseEntity {
   status: DealStatus
   customer: ICustomer
   comments: IComment[]
+}
+
+export type DealDBType = Models.Document & IDeal
+
+export type DealListDBType = {
+  total: number
+  documents: DealDBType[]
 }

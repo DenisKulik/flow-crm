@@ -1,3 +1,3 @@
 export * from './auth'
 export * from './board'
-export * from './deal'
+export * from './deals'

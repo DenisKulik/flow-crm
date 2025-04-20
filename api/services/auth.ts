@@ -4,15 +4,15 @@ import { account } from '@/api/appwrite'
 import type { IUserForm, UserDBType } from '@/types'
 
 interface IAuthService {
-  getAuthUser: () => Promise<UserDBType | null>
+  getAuthUser: () => Promise<UserDBType>
   login: (values: IUserForm) => Promise<void>
   logout: () => Promise<void>
   register: (values: IUserForm) => Promise<void>
 }
 
 export class AuthService implements IAuthService {
-  public async getAuthUser(): Promise<UserDBType> {
-    return await account.get()
+  public getAuthUser(): Promise<UserDBType> {
+    return account.get()
   }
 
   public async login(values: IUserForm): Promise<void> {
