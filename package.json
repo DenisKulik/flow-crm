@@ -13,13 +13,16 @@
   },
   "lint-staged": {
     "*.{js,ts,vue}": [
-      "pnpm run lintfix"
+      "pnpm run lintfix",
+      "git add ."
     ]
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.2",
+    "@js-temporal/polyfill": "^0.5.1",
     "@nuxtjs/google-fonts": "3.2.0",
     "@pinia/nuxt": "0.10.1",
+    "@tanstack/vue-query": "^5.74.5",
     "@tanstack/vue-table": "^8.21.2",
     "@vee-validate/zod": "^4.15.0",
     "@vueuse/core": "^13.0.0",

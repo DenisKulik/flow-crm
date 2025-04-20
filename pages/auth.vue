@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AuthForm from '@/components/auth/index.vue'
 
-useHead({ title: 'Login | Flow CRM' })
+useSeoMeta({ title: 'Login | Flow CRM' })
 definePageMeta({ layout: 'empty' })
 </script>
 
