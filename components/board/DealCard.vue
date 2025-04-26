@@ -7,15 +7,17 @@ const { deal } = defineProps<{
 </script>
 
 <template>
-  <UiCard ref="card" class="bg-secondary hover:bg-secondary/80">
-    <UiCardHeader role="button">
-      <UiCardTitle>{{ deal.name }}</UiCardTitle>
+  <UiCard ref="card" class="bg-card hover:bg-card/80 border-transparent hover:border-primary/20 transition-all group">
+    <UiCardHeader role="button" class="pb-2">
+      <div class="flex justify-between">
+        <UiCardTitle class="truncate">{{ deal.name }}</UiCardTitle>
+      </div>
     </UiCardHeader>
-    <UiCardContent>
+    <UiCardContent class="pb-2">
       <p class="mb-1 text-sm text-muted-foreground">{{ deal.price }}</p>
-      <p class="text-m">{{ deal.companyName }}</p>
+      <p class="text-md font-medium">{{ deal.companyName }}</p>
     </UiCardContent>
-    <UiCardFooter class="flex items-center justify-end">
+    <UiCardFooter class="flex items-center justify-end pt-0">
       <span class="text-xs text-muted-foreground">{{ deal.createdAt }}</span>
     </UiCardFooter>
   </UiCard>

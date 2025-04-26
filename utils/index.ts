@@ -1,6 +1,8 @@
 import { Temporal } from '@js-temporal/polyfill'
 
-import { toast } from '~/components/ui/toast'
+import { toast } from '@/components/ui/toast'
+import { STATUS_COLORS } from '@/constants'
+import type { DealStatus } from '@/types'
 
 export const showErrorToast = (error: unknown, fallback = 'Something went wrong, please try again.') => {
   toast({
@@ -18,4 +20,8 @@ export const formatDate = (date: string) => {
 
 export const formatPrice = (price: number) => {
   return price.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+}
+
+export const getStatusColor = (status: DealStatus) => {
+  return STATUS_COLORS[status] || '#6b7280'
 }
