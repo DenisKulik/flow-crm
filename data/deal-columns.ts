@@ -2,27 +2,27 @@ import { DealStatus, type IColumn } from '@/types'
 
 export const dealColumns: IColumn[] = [
   {
-    id: DealStatus.todo,
+    status: DealStatus.todo,
     name: 'Incoming',
     cards: []
   },
   {
-    id: DealStatus.toBeAgreed,
+    status: DealStatus.toBeAgreed,
     name: 'Agreement',
     cards: []
   },
   {
-    id: DealStatus.inProgress,
+    status: DealStatus.inProgress,
     name: 'In production',
     cards: []
   },
   {
-    id: DealStatus.produced,
+    status: DealStatus.produced,
     name: 'Produced',
     cards: []
   },
   {
-    id: DealStatus.done,
+    status: DealStatus.done,
     name: 'For shipment',
     cards: []
   }

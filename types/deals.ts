@@ -38,3 +38,10 @@ export type DealListDBType = {
   total: number
   documents: DealDBType[]
 }
+
+export interface IDealForm extends Omit<IDeal, 'customer' | 'comments'> {
+  customer: {
+    name: string
+    email: string
+  }
+}

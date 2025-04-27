@@ -10,7 +10,7 @@ export interface ICard {
 }
 
 export interface IColumn {
-  id: DealStatus
+  status: DealStatus
   name: string
   cards: ICard[]
 }

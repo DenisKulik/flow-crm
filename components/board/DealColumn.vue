@@ -1,14 +1,22 @@
 <script setup lang="ts">
 import { Plus } from 'lucide-vue-next'
 
-import type { IColumn } from '@/types'
+import type { DealStatus, IColumn } from '@/types'
 
 const { column } = defineProps<{
   column: IColumn
 }>()
 
-const statusColorValue = getStatusColor(column.id)
+const $emit = defineEmits<{
+  (e: 'open-create-deal-window', status: DealStatus): void
+}>()
+
+const statusColorValue = getStatusColor(column.status)
 const dealCount = computed(() => column.cards.length)
+
+const openCreateDealWindow = () => {
+  $emit('open-create-deal-window', column.status)
+}
 </script>
 
 <template>
@@ -21,12 +29,20 @@ const dealCount = computed(() => column.cards.length)
           {{ dealCount }}
         </span>
       </div>
-      <UiButton size="icon" variant="ghost" title="Add Deal" class="h-7 w-7 hover:opacity-80">
-        <Plus class="h-4 w-4" />
-      </UiButton>
     </div>
     <div class="space-y-3 flex-1">
       <slot name="cards" :cards="column.cards" />
+      <div class="flex justify-center">
+        <UiButton
+          size="icon"
+          variant="ghost"
+          title="Add Deal"
+          class="h-7 w-7 hover:opacity-80"
+          @click="openCreateDealWindow"
+        >
+          <Plus class="h-4 w-4" />
+        </UiButton>
+      </div>
     </div>
   </div>
 </template>

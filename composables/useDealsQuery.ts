@@ -16,7 +16,7 @@ export const useDealsQuery = () => {
       const deals = data.documents as unknown as IDeal[]
 
       deals.forEach((deal) => {
-        const columnIdx = board.findIndex((column) => column.id === deal.status)
+        const columnIdx = board.findIndex((column) => column.status === deal.status)
         board[columnIdx].cards.push({
           id: deal.$id,
           name: deal.name,
