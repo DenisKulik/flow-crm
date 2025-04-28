@@ -7,11 +7,12 @@ import { DealStatus, type IDealForm } from '@/types'
 
 const { isOpen, status } = defineProps<{
   isOpen: boolean
-  status: DealStatus
+  status?: DealStatus
 }>()
 
 const $emit = defineEmits<{
-  (e: 'close'): void
+  close: []
+  submit: [IDealForm]
 }>()
 
 const formSchema = toTypedSchema(
@@ -26,8 +27,7 @@ const formSchema = toTypedSchema(
   })
 )
 
-// TODO: status is not changing when status is changed
-const { handleSubmit, isFieldDirty, resetForm } = useForm<IDealForm>({
+const { handleSubmit, setFieldValue, isFieldDirty, resetForm } = useForm<IDealForm>({
   validationSchema: formSchema,
   initialValues: {
     name: '',
@@ -46,19 +46,19 @@ const close = () => {
 }
 
 const onSubmit = handleSubmit((values) => {
-  console.log(values)
+  $emit('submit', values)
 })
 
 watch(
   () => status,
-  (newStatus) => {
-    resetForm({
-      values: {
-        status: newStatus
-      }
-    })
+  (newStatus: DealStatus | undefined) => {
+    if (newStatus) {
+      setFieldValue('status', newStatus)
+    }
   }
 )
+
+defineExpose({ resetForm })
 </script>
 
 <template>
@@ -96,7 +96,6 @@ watch(
               </UiFormControl>
               <UiSelectContent>
                 <UiSelectGroup>
-                  <!-- TODO: add status names-->
                   <UiSelectItem v-for="dealStatus in DealStatus" :key="dealStatus" :value="dealStatus">
                     {{ dealStatus }}
                   </UiSelectItem>
@@ -105,10 +104,34 @@ watch(
             </UiSelect>
           </UiFormItem>
         </UiFormField>
+        <UiFormField
+          v-slot="{ componentField }"
+          :validate-on-blur="!isFieldDirty('customer.name')"
+          name="customer.name"
+        >
+          <UiFormItem>
+            <UiFormControl>
+              <UiInput type="text" placeholder="Customer name" v-bind="componentField" />
+            </UiFormControl>
+            <UiFormMessage />
+          </UiFormItem>
+        </UiFormField>
+        <UiFormField
+          v-slot="{ componentField }"
+          :validate-on-blur="!isFieldDirty('customer.email')"
+          name="customer.email"
+        >
+          <UiFormItem>
+            <UiFormControl>
+              <UiInput type="email" placeholder="Customer email" v-bind="componentField" />
+            </UiFormControl>
+            <UiFormMessage />
+          </UiFormItem>
+        </UiFormField>
       </form>
       <UiDialogFooter class="sm:justify-start">
-        <UiButton type="button" form="dialogForm" @click="onSubmit">Create</UiButton>
-        <UiButton type="button" variant="secondary" @click="close">Cancel</UiButton>
+        <UiButton @click="onSubmit">Create</UiButton>
+        <UiButton variant="secondary" @click="close">Cancel</UiButton>
       </UiDialogFooter>
     </UiDialogContent>
   </UiDialog>

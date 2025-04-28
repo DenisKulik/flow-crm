@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Plus } from 'lucide-vue-next'
 
-import { DealStatus } from '@/types'
+import { DealStatus, type IDealForm, type IFormMethods } from '@/types'
 
 import CreateDealWindow from './CreateDealWindow.vue'
 import DealCard from './DealCard.vue'
@@ -12,7 +12,8 @@ useSeoMeta({ title: 'Home | Flow CRM' })
 const { data: board } = useDealsQuery()
 
 const isOpenCreateDealWindow = ref<boolean>(false)
-const createDealStatus = ref<DealStatus>(DealStatus.todo)
+const createDealStatus = ref<DealStatus>()
+const dealForm = useTemplateRef<IFormMethods>('dealForm')
 
 const openCreateDealWindow = (status = DealStatus.todo) => {
   isOpenCreateDealWindow.value = true
@@ -22,6 +23,20 @@ const openCreateDealWindow = (status = DealStatus.todo) => {
 const closeCreateDealWindow = () => {
   isOpenCreateDealWindow.value = false
 }
+
+const createDeal = (values: IDealForm) => {
+  console.log(values)
+  closeCreateDealWindow()
+}
+
+watch(isOpenCreateDealWindow, (newIsOpen) => {
+  if (!newIsOpen) {
+    setTimeout(() => {
+      dealForm.value?.resetForm()
+      createDealStatus.value = undefined
+    }, 300)
+  }
+})
 </script>
 
 <template>
@@ -48,5 +63,11 @@ const closeCreateDealWindow = () => {
     </div>
   </div>
 
-  <CreateDealWindow :is-open="isOpenCreateDealWindow" :status="createDealStatus" @close="closeCreateDealWindow" />
+  <CreateDealWindow
+    ref="dealForm"
+    :is-open="isOpenCreateDealWindow"
+    :status="createDealStatus"
+    @submit="createDeal"
+    @close="closeCreateDealWindow"
+  />
 </template>
