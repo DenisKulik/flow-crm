@@ -18,11 +18,11 @@ const { isInitialized, isLoading } = storeToRefs(appStore)
 
 <template>
   <Toaster />
-  <AppLoader
-    v-show="!isInitialized || isLoading"
-    class="fixed inset-0 z-50 flex items-center justify-center bg-background"
-  />
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
+  <AppLoader
+    v-show="!isInitialized || isLoading"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm"
+  />
 </template>

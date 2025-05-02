@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Plus } from 'lucide-vue-next'
 
+import { useAppStore } from '@/stores/app.store'
 import { DealStatus, type IDealForm, type IFormMethods } from '@/types'
 
 import CreateDealWindow from './CreateDealWindow.vue'
@@ -9,7 +10,8 @@ import DealColumn from './DealColumn.vue'
 
 useSeoMeta({ title: 'Home | Flow CRM' })
 
-const { data: board } = useDealsQuery()
+const appStore = useAppStore()
+const { data: board, status } = useDealsQuery()
 
 const isOpenCreateDealWindow = ref<boolean>(false)
 const createDealStatus = ref<DealStatus>()
@@ -28,6 +30,14 @@ const createDeal = (values: IDealForm) => {
   console.log(values)
   closeCreateDealWindow()
 }
+
+watch(status, (newStatus) => {
+  if (newStatus === 'pending') {
+    appStore.startLoading('deals')
+  } else {
+    appStore.stopLoading('deals')
+  }
+})
 
 watch(isOpenCreateDealWindow, (newIsOpen) => {
   if (!newIsOpen) {

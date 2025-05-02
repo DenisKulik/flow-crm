@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { useAppStore } from '@/stores/app.store'
 import type { IFormMethods, IUserForm } from '@/types'
 import { showErrorToast } from '@/utils'
-import { useAppStore } from '~/stores/app.store'
 
 const appStore = useAppStore()
 const router = useRouter()
