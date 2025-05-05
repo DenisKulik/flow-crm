@@ -11,11 +11,13 @@ import DealColumn from './DealColumn.vue'
 useSeoMeta({ title: 'Home | Flow CRM' })
 
 const appStore = useAppStore()
-const { data: board, status } = useDealsQuery()
+const { data: board, status, refresh, error } = useDealsQuery()
+const { createDeal } = useDeals()
 
 const isOpenCreateDealWindow = ref<boolean>(false)
 const createDealStatus = ref<DealStatus>()
 const dealForm = useTemplateRef<IFormMethods>('dealForm')
+const isLoading = ref<boolean>(false)
 
 const openCreateDealWindow = (status = DealStatus.todo) => {
   isOpenCreateDealWindow.value = true
@@ -26,9 +28,18 @@ const closeCreateDealWindow = () => {
   isOpenCreateDealWindow.value = false
 }
 
-const createDeal = (values: IDealForm) => {
-  console.log(values)
-  closeCreateDealWindow()
+const createDealHandler = async (data: IDealForm) => {
+  try {
+    isLoading.value = true
+    await createDeal(data)
+    closeCreateDealWindow()
+    await refresh()
+    showSuccessToast(`Deal "${data.name}" created successfully`)
+  } catch (error: unknown) {
+    showErrorToast(error)
+  } finally {
+    isLoading.value = false
+  }
 }
 
 watch(status, (newStatus) => {
@@ -36,6 +47,12 @@ watch(status, (newStatus) => {
     appStore.startLoading('deals')
   } else {
     appStore.stopLoading('deals')
+  }
+})
+
+watch(error, (newError) => {
+  if (newError) {
+    showErrorToast(newError)
   }
 })
 
@@ -77,7 +94,8 @@ watch(isOpenCreateDealWindow, (newIsOpen) => {
     ref="dealForm"
     :is-open="isOpenCreateDealWindow"
     :status="createDealStatus"
-    @submit="createDeal"
+    :disabled="isLoading"
+    @submit="createDealHandler"
     @close="closeCreateDealWindow"
   />
 </template>

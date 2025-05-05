@@ -13,6 +13,14 @@ export const showErrorToast = (error: unknown, fallback = 'Something went wrong,
   })
 }
 
+export const showSuccessToast = (message: string) => {
+  toast({
+    title: 'Success',
+    description: message,
+    variant: 'success'
+  })
+}
+
 export const formatDate = (date: string) => {
   return Temporal.Instant.from(date)
     .toZonedDateTimeISO('UTC')

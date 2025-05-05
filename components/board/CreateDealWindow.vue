@@ -5,9 +5,14 @@ import { z } from 'zod'
 
 import { DealStatus, type IDealForm } from '@/types'
 
-const { isOpen, status } = defineProps<{
+const {
+  isOpen,
+  status,
+  disabled = false
+} = defineProps<{
   isOpen: boolean
   status?: DealStatus
+  disabled?: boolean
 }>()
 
 const $emit = defineEmits<{
@@ -130,8 +135,11 @@ defineExpose({ resetForm })
         </UiFormField>
       </form>
       <UiDialogFooter class="sm:justify-start">
-        <UiButton @click="onSubmit">Create</UiButton>
-        <UiButton variant="secondary" @click="close">Cancel</UiButton>
+        <UiButton :disabled @click="onSubmit">
+          <AppLoader v-if="disabled" :width="42" />
+          <span v-else>Create</span>
+        </UiButton>
+        <UiButton :disabled variant="secondary" @click="close">Cancel</UiButton>
       </UiDialogFooter>
     </UiDialogContent>
   </UiDialog>
