@@ -46,14 +46,14 @@ const handleDrop = async (deal: ICard, newStatus: DealStatus) => {
   if (deal.status === newStatus) return
 
   try {
-    isLoading.value = true
+    appStore.startLoading('change-deal-status')
     await updateDeal(deal.id, { status: newStatus })
     await refresh()
     showSuccessToast(`Deal "${deal.name}" moved to ${newStatus}`)
   } catch (error: unknown) {
     showErrorToast(error)
   } finally {
-    isLoading.value = false
+    appStore.stopLoading('change-deal-status')
   }
 }
 
@@ -83,7 +83,7 @@ watch(isOpenCreateDealWindow, (newIsOpen) => {
 
 <template>
   <div class="space-y-6">
-    <div class="flex justify-between items-center">
+    <div class="flex items-center gap-5">
       <h1 class="text-3xl font-bold">Deal Board</h1>
       <UiButton size="sm" class="gap-1" @click="openCreateDealWindow(DealStatus.todo)">
         <Plus class="h-4 w-4" />
@@ -91,7 +91,7 @@ watch(isOpenCreateDealWindow, (newIsOpen) => {
       </UiButton>
     </div>
 
-    <div class="grid [grid-template-columns:repeat(5,1fr)] gap-6 min-h-[calc(100vh-160px)]">
+    <div class="grid [grid-template-columns:repeat(5,1fr)] gap-6 min-h-[calc(100vh-140px)]">
       <DealColumn
         v-for="column in board"
         :key="column.status"

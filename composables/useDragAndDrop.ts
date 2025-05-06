@@ -1,6 +1,8 @@
 import type { DealStatus, ICard } from '@/types'
 
 export const useDragAndDrop = () => {
+  const isDraggingOver = ref(false)
+
   const onDragStart = (e: DragEvent, deal: ICard, emit: (event: 'dragstart', deal: ICard) => void) => {
     if (e.dataTransfer) {
       e.dataTransfer.effectAllowed = 'move'
@@ -15,7 +17,11 @@ export const useDragAndDrop = () => {
 
   const onDragOver = (e: DragEvent) => {
     e.preventDefault()
-    e.dataTransfer!.dropEffect = 'move'
+    isDraggingOver.value = true
+  }
+
+  const onDragLeave = () => {
+    isDraggingOver.value = false
   }
 
   const onDrop = (
@@ -24,17 +30,25 @@ export const useDragAndDrop = () => {
     newStatus: DealStatus
   ) => {
     e.preventDefault()
-    const data = e.dataTransfer?.getData('text/plain')
-    if (data) {
-      const deal = JSON.parse(data) as ICard
+    isDraggingOver.value = false
+
+    const dealData = e.dataTransfer?.getData('text/plain')
+    if (!dealData) return
+
+    try {
+      const deal = JSON.parse(dealData) as ICard
       emit('drop', deal, newStatus)
+    } catch (error) {
+      console.error('Failed to parse deal data:', error)
     }
   }
 
   return {
+    isDraggingOver,
     onDragStart,
     onDragEnd,
     onDragOver,
+    onDragLeave,
     onDrop
   }
 }

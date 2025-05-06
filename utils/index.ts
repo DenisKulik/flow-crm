@@ -9,7 +9,8 @@ export const showErrorToast = (error: unknown, fallback = 'Something went wrong,
   toast({
     title: 'Error',
     description: error instanceof Error ? error.message : fallback,
-    variant: 'destructive'
+    variant: 'destructive',
+    duration: 3000
   })
 }
 
@@ -17,7 +18,8 @@ export const showSuccessToast = (message: string) => {
   toast({
     title: 'Success',
     description: message,
-    variant: 'success'
+    variant: 'success',
+    duration: 3000
   })
 }
 

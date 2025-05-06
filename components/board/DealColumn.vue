@@ -13,10 +13,15 @@ const $emit = defineEmits<{
   (e: 'drop', deal: ICard, newStatus: DealStatus): void
 }>()
 
+const { isDraggingOver, onDragOver, onDragLeave, onDrop } = useDragAndDrop()
+
 const statusColorValue = getStatusColor(column.status)
 const dealCount = computed(() => column.cards.length)
+const isEmpty = computed(() => dealCount.value === 0)
 
-const { onDragOver, onDrop } = useDragAndDrop()
+const handleDrop = (e: DragEvent) => {
+  onDrop(e, $emit, column.status)
+}
 
 const openCreateDealWindow = () => {
   $emit('open-create-deal-window', column.status)
@@ -25,9 +30,11 @@ const openCreateDealWindow = () => {
 
 <template>
   <div
-    class="select-none rounded-xl bg-secondary p-4 min-h-[500px] flex flex-col"
+    class="select-none rounded-xl bg-secondary p-4 min-h-[500px] flex flex-col transition-colors duration-200"
+    :class="{ 'ring-2 ring-primary/50': isDraggingOver }"
     @dragover="onDragOver"
-    @drop="(e) => onDrop(e, $emit, column.status)"
+    @dragleave="onDragLeave"
+    @drop="handleDrop"
   >
     <div class="flex items-center justify-between mb-3 border-b-2 pb-2" :style="{ borderColor: statusColorValue }">
       <div class="flex items-center gap-2">
@@ -39,17 +46,28 @@ const openCreateDealWindow = () => {
       </div>
     </div>
     <div class="space-y-3 flex-1">
-      <slot name="cards" :cards="column.cards" />
-      <div class="flex justify-center">
-        <UiButton
-          size="icon"
-          variant="ghost"
-          title="Add Deal"
-          class="h-7 w-7 hover:opacity-80"
-          @click="openCreateDealWindow"
-        >
-          <Plus class="h-4 w-4" />
-        </UiButton>
+      <template v-if="!isEmpty">
+        <slot name="cards" :cards="column.cards" />
+        <div class="flex justify-center">
+          <UiButton
+            size="icon"
+            variant="ghost"
+            title="Add Deal"
+            class="h-7 w-7 hover:opacity-80"
+            @click="openCreateDealWindow"
+          >
+            <Plus class="h-4 w-4" />
+          </UiButton>
+        </div>
+      </template>
+      <div v-show="isEmpty" class="flex flex-col items-center justify-center h-full text-muted-foreground">
+        <p class="text-sm mb-2">No deals in this column</p>
+        <p class="text-xs">
+          Drag and drop deals here or
+          <span role="button" class="font-bold text-white cursor-pointer" @click="openCreateDealWindow">
+            add a new deal
+          </span>
+        </p>
       </div>
     </div>
   </div>
