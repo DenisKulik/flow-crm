@@ -35,12 +35,8 @@ export const useDragAndDrop = () => {
     const dealData = e.dataTransfer?.getData('text/plain')
     if (!dealData) return
 
-    try {
-      const deal = JSON.parse(dealData) as ICard
-      emit('drop', deal, newStatus)
-    } catch (error) {
-      console.error('Failed to parse deal data:', error)
-    }
+    const deal = JSON.parse(dealData) as ICard
+    emit('drop', deal, newStatus)
   }
 
   return {

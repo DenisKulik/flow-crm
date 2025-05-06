@@ -1,29 +1,30 @@
+import { DEAL_STATUS_LABELS } from '@/constants'
 import { DealStatus, type IColumn } from '@/types'
 
 export const dealColumns: IColumn[] = [
   {
     status: DealStatus.todo,
-    name: 'Incoming',
+    name: DEAL_STATUS_LABELS[DealStatus.todo],
     cards: []
   },
   {
     status: DealStatus.toBeAgreed,
-    name: 'Agreement',
+    name: DEAL_STATUS_LABELS[DealStatus.toBeAgreed],
     cards: []
   },
   {
     status: DealStatus.inProgress,
-    name: 'In production',
+    name: DEAL_STATUS_LABELS[DealStatus.inProgress],
     cards: []
   },
   {
     status: DealStatus.produced,
-    name: 'Produced',
+    name: DEAL_STATUS_LABELS[DealStatus.produced],
     cards: []
   },
   {
     status: DealStatus.done,
-    name: 'For shipment',
+    name: DEAL_STATUS_LABELS[DealStatus.done],
     cards: []
   }
 ]

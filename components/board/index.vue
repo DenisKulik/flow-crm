@@ -1,23 +1,22 @@
 <script setup lang="ts">
-import { Plus } from 'lucide-vue-next'
-
 import { useAppStore } from '@/stores/app.store'
 import { DealStatus, type ICard, type IDealForm, type IFormMethods } from '@/types'
 
+import BoardGrid from './BoardGrid.vue'
+import BoardHeader from './BoardHeader.vue'
 import CreateDealWindow from './CreateDealWindow.vue'
-import DealCard from './DealCard.vue'
-import DealColumn from './DealColumn.vue'
 
 useSeoMeta({ title: 'Home | Flow CRM' })
 
 const appStore = useAppStore()
+const { startLoading, stopLoading } = appStore
 const { data: board, status, refresh, error } = useDealsQuery()
 const { createDeal, updateDeal } = useDeals()
 
 const isOpenCreateDealWindow = ref<boolean>(false)
 const createDealStatus = ref<DealStatus>()
 const dealForm = useTemplateRef<IFormMethods>('dealForm')
-const isLoading = ref<boolean>(false)
+const isCreatingDeal = ref<boolean>(false)
 
 const openCreateDealWindow = (status = DealStatus.todo) => {
   isOpenCreateDealWindow.value = true
@@ -30,38 +29,38 @@ const closeCreateDealWindow = () => {
 
 const createDealHandler = async (data: IDealForm) => {
   try {
-    isLoading.value = true
+    isCreatingDeal.value = true
     await createDeal(data)
     closeCreateDealWindow()
-    await refresh()
     showSuccessToast(`Deal "${data.name}" created successfully`)
+    await refresh()
   } catch (error: unknown) {
     showErrorToast(error)
   } finally {
-    isLoading.value = false
+    isCreatingDeal.value = false
   }
 }
 
-const handleDrop = async (deal: ICard, newStatus: DealStatus) => {
+const changeDealStatus = async (deal: ICard, newStatus: DealStatus) => {
   if (deal.status === newStatus) return
 
   try {
-    appStore.startLoading('change-deal-status')
+    startLoading('change-deal-status')
     await updateDeal(deal.id, { status: newStatus })
-    await refresh()
     showSuccessToast(`Deal "${deal.name}" moved to ${newStatus}`)
+    await refresh()
   } catch (error: unknown) {
     showErrorToast(error)
   } finally {
-    appStore.stopLoading('change-deal-status')
+    stopLoading('change-deal-status')
   }
 }
 
 watch(status, (newStatus) => {
   if (newStatus === 'pending') {
-    appStore.startLoading('deals')
+    startLoading('deals')
   } else {
-    appStore.stopLoading('deals')
+    stopLoading('deals')
   }
 })
 
@@ -82,35 +81,13 @@ watch(isOpenCreateDealWindow, (newIsOpen) => {
 </script>
 
 <template>
-  <div class="space-y-6">
-    <div class="flex items-center gap-5">
-      <h1 class="text-3xl font-bold">Deal Board</h1>
-      <UiButton size="sm" class="gap-1" @click="openCreateDealWindow(DealStatus.todo)">
-        <Plus class="h-4 w-4" />
-        <span>Add Deal</span>
-      </UiButton>
-    </div>
-
-    <div class="grid [grid-template-columns:repeat(5,1fr)] gap-6 min-h-[calc(100vh-140px)]">
-      <DealColumn
-        v-for="column in board"
-        :key="column.status"
-        :column="column"
-        @open-create-deal-window="openCreateDealWindow"
-        @drop="handleDrop"
-      >
-        <template #cards="{ cards }">
-          <DealCard v-for="card in cards" :key="card.id" :deal="card" />
-        </template>
-      </DealColumn>
-    </div>
-  </div>
-
+  <BoardHeader class="mb-6" @open-create-deal-window="openCreateDealWindow" />
+  <BoardGrid v-if="board" :board="board" @open-create-deal-window="openCreateDealWindow" @drop="changeDealStatus" />
   <CreateDealWindow
     ref="dealForm"
     :is-open="isOpenCreateDealWindow"
     :status="createDealStatus"
-    :disabled="isLoading"
+    :disabled="isCreatingDeal"
     @submit="createDealHandler"
     @close="closeCreateDealWindow"
   />

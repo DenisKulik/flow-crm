@@ -4,6 +4,7 @@ import { useForm } from 'vee-validate'
 import { z } from 'zod'
 
 import { DealStatus, type IDealForm } from '@/types'
+import { DEAL_STATUS_LABELS } from '~/constants'
 
 const {
   isOpen,
@@ -101,8 +102,12 @@ defineExpose({ resetForm })
               </UiFormControl>
               <UiSelectContent>
                 <UiSelectGroup>
-                  <UiSelectItem v-for="dealStatus in DealStatus" :key="dealStatus" :value="dealStatus">
-                    {{ dealStatus }}
+                  <UiSelectItem
+                    v-for="[dealStatus, statusName] in Object.entries(DEAL_STATUS_LABELS)"
+                    :key="dealStatus"
+                    :value="dealStatus"
+                  >
+                    {{ statusName }}
                   </UiSelectItem>
                 </UiSelectGroup>
               </UiSelectContent>
