@@ -2,7 +2,7 @@
 import { Plus } from 'lucide-vue-next'
 
 import { useAppStore } from '@/stores/app.store'
-import { DealStatus, type IDealForm, type IFormMethods } from '@/types'
+import { DealStatus, type ICard, type IDealForm, type IFormMethods } from '@/types'
 
 import CreateDealWindow from './CreateDealWindow.vue'
 import DealCard from './DealCard.vue'
@@ -12,7 +12,7 @@ useSeoMeta({ title: 'Home | Flow CRM' })
 
 const appStore = useAppStore()
 const { data: board, status, refresh, error } = useDealsQuery()
-const { createDeal } = useDeals()
+const { createDeal, updateDeal } = useDeals()
 
 const isOpenCreateDealWindow = ref<boolean>(false)
 const createDealStatus = ref<DealStatus>()
@@ -35,6 +35,21 @@ const createDealHandler = async (data: IDealForm) => {
     closeCreateDealWindow()
     await refresh()
     showSuccessToast(`Deal "${data.name}" created successfully`)
+  } catch (error: unknown) {
+    showErrorToast(error)
+  } finally {
+    isLoading.value = false
+  }
+}
+
+const handleDrop = async (deal: ICard, newStatus: DealStatus) => {
+  if (deal.status === newStatus) return
+
+  try {
+    isLoading.value = true
+    await updateDeal(deal.id, { status: newStatus })
+    await refresh()
+    showSuccessToast(`Deal "${deal.name}" moved to ${newStatus}`)
   } catch (error: unknown) {
     showErrorToast(error)
   } finally {
@@ -82,6 +97,7 @@ watch(isOpenCreateDealWindow, (newIsOpen) => {
         :key="column.status"
         :column="column"
         @open-create-deal-window="openCreateDealWindow"
+        @drop="handleDrop"
       >
         <template #cards="{ cards }">
           <DealCard v-for="card in cards" :key="card.id" :deal="card" />

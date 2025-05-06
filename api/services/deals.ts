@@ -17,4 +17,8 @@ export class DealsService implements IDealsService {
     const dealId = nanoid()
     await DB.createDocument(DB_ID, COLLECTION_DEALS, dealId, deal)
   }
+
+  public async updateDeal(id: string, deal: Partial<IDealForm>): Promise<void> {
+    await DB.updateDocument(DB_ID, COLLECTION_DEALS, id, deal)
+  }
 }

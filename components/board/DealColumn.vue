@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { Plus } from 'lucide-vue-next'
 
-import type { DealStatus, IColumn } from '@/types'
+import { useDragAndDrop } from '@/composables/useDragAndDrop'
+import type { DealStatus, ICard, IColumn } from '@/types'
 
 const { column } = defineProps<{
   column: IColumn
@@ -9,10 +10,13 @@ const { column } = defineProps<{
 
 const $emit = defineEmits<{
   (e: 'open-create-deal-window', status: DealStatus): void
+  (e: 'drop', deal: ICard, newStatus: DealStatus): void
 }>()
 
 const statusColorValue = getStatusColor(column.status)
 const dealCount = computed(() => column.cards.length)
+
+const { onDragOver, onDrop } = useDragAndDrop()
 
 const openCreateDealWindow = () => {
   $emit('open-create-deal-window', column.status)
@@ -20,7 +24,11 @@ const openCreateDealWindow = () => {
 </script>
 
 <template>
-  <div class="select-none rounded-xl bg-secondary p-4 min-h-[500px] flex flex-col">
+  <div
+    class="select-none rounded-xl bg-secondary p-4 min-h-[500px] flex flex-col"
+    @dragover="onDragOver"
+    @drop="(e) => onDrop(e, $emit, column.status)"
+  >
     <div class="flex items-center justify-between mb-3 border-b-2 pb-2" :style="{ borderColor: statusColorValue }">
       <div class="flex items-center gap-2">
         <div class="w-2 h-2 rounded-full" :style="{ backgroundColor: statusColorValue }" />

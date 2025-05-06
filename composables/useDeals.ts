@@ -8,7 +8,12 @@ export const useDeals = () => {
     await dealsService.createDeal(data)
   }
 
+  const updateDeal = async (id: string, data: Partial<IDealForm>) => {
+    await dealsService.updateDeal(id, data)
+  }
+
   return {
-    createDeal
+    createDeal,
+    updateDeal
   }
 }
