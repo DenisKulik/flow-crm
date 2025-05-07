@@ -4,7 +4,7 @@ import { DealStatus, type ICard, type IDealForm, type IFormMethods } from '@/typ
 
 import BoardGrid from './BoardGrid.vue'
 import BoardHeader from './BoardHeader.vue'
-import CreateDealWindow from './CreateDealWindow.vue'
+import CreateDealDialog from './CreateDealDialog.vue'
 
 useSeoMeta({ title: 'Home | Flow CRM' })
 
@@ -13,26 +13,29 @@ const { startLoading, stopLoading } = appStore
 const { data: board, status, refresh, error } = useDealsQuery()
 const { createDeal, updateDeal } = useDeals()
 
-const isOpenCreateDealWindow = ref<boolean>(false)
+const isOpenCreateDealDialog = ref<boolean>(false)
 const createDealStatus = ref<DealStatus>()
-const dealForm = useTemplateRef<IFormMethods>('dealForm')
+const crateDealForm = useTemplateRef<IFormMethods>('crateDealForm')
 const isCreatingDeal = ref<boolean>(false)
 
-const openCreateDealWindow = (status = DealStatus.todo) => {
-  isOpenCreateDealWindow.value = true
+const isOpenEditDealDialog = ref<boolean>(false)
+const editDeal = ref<ICard>()
+
+const openCreateDealDialog = (status = DealStatus.todo) => {
+  isOpenCreateDealDialog.value = true
   createDealStatus.value = status
 }
 
-const closeCreateDealWindow = () => {
-  isOpenCreateDealWindow.value = false
+const closeCreateDealDialog = () => {
+  isOpenCreateDealDialog.value = false
 }
 
-const createDealHandler = async (data: IDealForm) => {
+const createDealHandler = async (deal: IDealForm) => {
   try {
     isCreatingDeal.value = true
-    await createDeal(data)
-    closeCreateDealWindow()
-    showSuccessToast(`Deal "${data.name}" created successfully`)
+    await createDeal(deal)
+    closeCreateDealDialog()
+    showSuccessToast(`Deal "${deal.name}" created successfully`)
     await refresh()
   } catch (error: unknown) {
     showErrorToast(error)
@@ -41,13 +44,18 @@ const createDealHandler = async (data: IDealForm) => {
   }
 }
 
-const changeDealStatus = async (deal: ICard, newStatus: DealStatus) => {
-  if (deal.status === newStatus) return
+const openEditDealDialog = (deal: ICard) => {
+  isOpenEditDealDialog.value = true
+  editDeal.value = deal
+}
+
+const changeDealStatus = async (card: ICard, newStatus: DealStatus) => {
+  if (card.status === newStatus) return
 
   try {
     startLoading('change-deal-status')
-    await updateDeal(deal.id, { status: newStatus })
-    showSuccessToast(`Deal "${deal.name}" moved to ${newStatus}`)
+    await updateDeal(card.id, { status: newStatus })
+    showSuccessToast(`Deal "${card.name}" moved to ${newStatus}`)
     await refresh()
   } catch (error: unknown) {
     showErrorToast(error)
@@ -70,10 +78,10 @@ watch(error, (newError) => {
   }
 })
 
-watch(isOpenCreateDealWindow, (newIsOpen) => {
+watch(isOpenCreateDealDialog, (newIsOpen) => {
   if (!newIsOpen) {
     setTimeout(() => {
-      dealForm.value?.resetForm()
+      crateDealForm.value?.resetForm()
       createDealStatus.value = undefined
     }, 300)
   }
@@ -81,14 +89,20 @@ watch(isOpenCreateDealWindow, (newIsOpen) => {
 </script>
 
 <template>
-  <BoardHeader class="mb-6" @open-create-deal-window="openCreateDealWindow" />
-  <BoardGrid v-if="board" :board="board" @open-create-deal-window="openCreateDealWindow" @drop="changeDealStatus" />
-  <CreateDealWindow
-    ref="dealForm"
-    :is-open="isOpenCreateDealWindow"
+  <BoardHeader class="mb-6" @open-create-deal-dialog="openCreateDealDialog" />
+  <BoardGrid
+    v-if="board"
+    :board="board"
+    @drop="changeDealStatus"
+    @open-create-deal-dialog="openCreateDealDialog"
+    @open-edit-deal-dialog="openEditDealDialog"
+  />
+  <CreateDealDialog
+    ref="crateDealForm"
+    :is-open="isOpenCreateDealDialog"
     :status="createDealStatus"
     :disabled="isCreatingDeal"
     @submit="createDealHandler"
-    @close="closeCreateDealWindow"
+    @close="closeCreateDealDialog"
   />
 </template>

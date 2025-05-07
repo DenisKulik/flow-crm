@@ -6,21 +6,28 @@ const { deal } = defineProps<{
   deal: ICard
 }>()
 
-const emit = defineEmits<{
-  (e: 'dragstart', deal: ICard): void
-  (e: 'dragend'): void
+const $emit = defineEmits<{
+  openEditDealDialog: [deal: ICard]
 }>()
 
-const { onDragStart, onDragEnd } = useDragAndDrop()
+const { onDragStart } = useDragAndDrop()
+
+const handleDragStart = (e: DragEvent) => {
+  onDragStart(e, deal)
+}
+
+const openEditDealDialog = () => {
+  $emit('openEditDealDialog', deal)
+}
 </script>
 
 <template>
   <UiCard
     ref="card"
-    class="bg-card hover:bg-card/80 border-transparent hover:border-primary/20 transition-all group cursor-move"
+    class="bg-card hover:bg-card/80 border-transparent hover:border-primary/20 transition-all group cursor-pointer"
     draggable="true"
-    @dragstart="(e) => onDragStart(e, deal, emit)"
-    @dragend="() => onDragEnd(emit)"
+    @dblclick="openEditDealDialog"
+    @dragstart="handleDragStart"
   >
     <UiCardHeader role="button" class="pb-2">
       <div class="flex justify-between">

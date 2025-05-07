@@ -9,8 +9,8 @@ const { column } = defineProps<{
 }>()
 
 const $emit = defineEmits<{
-  (e: 'open-create-deal-window', status: DealStatus): void
-  (e: 'drop', deal: ICard, newStatus: DealStatus): void
+  openCreateDealDialog: [status: DealStatus]
+  drop: [deal: ICard, newStatus: DealStatus]
 }>()
 
 const { isDraggingOver, onDragOver, onDragLeave, onDrop } = useDragAndDrop()
@@ -23,8 +23,8 @@ const handleDrop = (e: DragEvent) => {
   onDrop(e, $emit, column.status)
 }
 
-const openCreateDealWindow = () => {
-  $emit('open-create-deal-window', column.status)
+const openCreateDealDialog = () => {
+  $emit('openCreateDealDialog', column.status)
 }
 </script>
 
@@ -54,7 +54,7 @@ const openCreateDealWindow = () => {
             variant="ghost"
             title="Add Deal"
             class="h-7 w-7 hover:opacity-80"
-            @click="openCreateDealWindow"
+            @click="openCreateDealDialog"
           >
             <Plus class="h-4 w-4" />
           </UiButton>
@@ -64,7 +64,7 @@ const openCreateDealWindow = () => {
         <p class="text-sm mb-2">No deals in this column</p>
         <p class="text-xs">
           Drag and drop deals here or
-          <span role="button" class="font-bold text-white cursor-pointer" @click="openCreateDealWindow">
+          <span role="button" class="font-bold text-white cursor-pointer" @click="openCreateDealDialog">
             add a new deal
           </span>
         </p>

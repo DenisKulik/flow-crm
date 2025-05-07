@@ -8,10 +8,23 @@ defineProps<{
   board: IColumn[]
 }>()
 
-defineEmits<{
-  openCreateDealWindow: [status: DealStatus]
+const $emit = defineEmits<{
   drop: [deal: ICard, newStatus: DealStatus]
+  openCreateDealDialog: [status: DealStatus]
+  openEditDealDialog: [deal: ICard]
 }>()
+
+const drop = (deal: ICard, newStatus: DealStatus): void => {
+  $emit('drop', deal, newStatus)
+}
+
+const openCreateDealDialog = (status: DealStatus): void => {
+  $emit('openCreateDealDialog', status)
+}
+
+const openEditDealDialog = (deal: ICard): void => {
+  $emit('openEditDealDialog', deal)
+}
 </script>
 
 <template>
@@ -20,11 +33,11 @@ defineEmits<{
       v-for="column in board"
       :key="column.status"
       :column="column"
-      @open-create-deal-window="$emit('openCreateDealWindow', $event)"
-      @drop="(deal, newStatus) => $emit('drop', deal, newStatus)"
+      @drop="drop"
+      @open-create-deal-dialog="openCreateDealDialog"
     >
       <template #cards="{ cards }">
-        <DealCard v-for="card in cards" :key="card.id" :deal="card" />
+        <DealCard v-for="card in cards" :key="card.id" :deal="card" @open-edit-deal-dialog="openEditDealDialog" />
       </template>
     </DealColumn>
   </div>
