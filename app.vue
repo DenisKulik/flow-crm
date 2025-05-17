@@ -8,9 +8,7 @@ useHead({
   }
 })
 
-if (import.meta.client) {
-  useAppInit()
-}
+useAppInit()
 
 const appStore = useAppStore()
 const { isInitialized, isLoading } = storeToRefs(appStore)

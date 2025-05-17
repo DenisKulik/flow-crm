@@ -91,7 +91,6 @@ watch(isOpenCreateDealDialog, (newIsOpen) => {
 <template>
   <BoardHeader class="mb-6" @open-create-deal-dialog="openCreateDealDialog" />
   <BoardGrid
-    v-if="board"
     :board="board"
     @drop="changeDealStatus"
     @open-create-deal-dialog="openCreateDealDialog"
