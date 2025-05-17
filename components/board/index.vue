@@ -5,6 +5,7 @@ import { DealStatus, type ICard, type IDealForm, type IFormMethods } from '@/typ
 import BoardGrid from './BoardGrid.vue'
 import BoardHeader from './BoardHeader.vue'
 import CreateDealDialog from './CreateDealDialog.vue'
+import DealInfo from './deal-info/index.vue'
 
 useSeoMeta({ title: 'Home | Flow CRM' })
 
@@ -104,4 +105,5 @@ watch(isOpenCreateDealDialog, (newIsOpen) => {
     @submit="createDealHandler"
     @close="closeCreateDealDialog"
   />
+  <DealInfo />
 </template>
