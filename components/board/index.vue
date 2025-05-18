@@ -5,7 +5,6 @@ import { DealStatus, type ICard, type IDealForm, type IFormMethods } from '@/typ
 import BoardGrid from './BoardGrid.vue'
 import BoardHeader from './BoardHeader.vue'
 import CreateDealDialog from './CreateDealDialog.vue'
-import DealInfo from './deal-info/index.vue'
 
 useSeoMeta({ title: 'Home | Flow CRM' })
 
@@ -19,8 +18,8 @@ const createDealStatus = ref<DealStatus>()
 const crateDealForm = useTemplateRef<IFormMethods>('crateDealForm')
 const isCreatingDeal = ref<boolean>(false)
 
-const isOpenEditDealDialog = ref<boolean>(false)
-const editDeal = ref<ICard>()
+const isOpenDealInfoDrawer = ref<boolean>(false)
+const chosenDealInfo = ref<ICard>()
 
 const openCreateDealDialog = (status = DealStatus.todo) => {
   isOpenCreateDealDialog.value = true
@@ -45,9 +44,14 @@ const createDealHandler = async (deal: IDealForm) => {
   }
 }
 
-const openEditDealDialog = (deal: ICard) => {
-  isOpenEditDealDialog.value = true
-  editDeal.value = deal
+const openDealInfoDrawer = (deal: ICard) => {
+  isOpenDealInfoDrawer.value = true
+  chosenDealInfo.value = deal
+}
+
+const closeDealInfoDrawer = () => {
+  isOpenDealInfoDrawer.value = false
+  chosenDealInfo.value = undefined
 }
 
 const changeDealStatus = async (card: ICard, newStatus: DealStatus) => {
@@ -95,7 +99,7 @@ watch(isOpenCreateDealDialog, (newIsOpen) => {
     :board="board"
     @drop="changeDealStatus"
     @open-create-deal-dialog="openCreateDealDialog"
-    @open-edit-deal-dialog="openEditDealDialog"
+    @open-deal-info-drawer="openDealInfoDrawer"
   />
   <CreateDealDialog
     ref="crateDealForm"
@@ -105,5 +109,5 @@ watch(isOpenCreateDealDialog, (newIsOpen) => {
     @submit="createDealHandler"
     @close="closeCreateDealDialog"
   />
-  <DealInfo />
+  <BoardDealInfo :is-open="isOpenDealInfoDrawer" :deal="chosenDealInfo" @close="closeDealInfoDrawer" />
 </template>

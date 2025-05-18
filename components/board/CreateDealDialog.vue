@@ -47,8 +47,14 @@ const { handleSubmit, setFieldValue, isFieldDirty, resetForm } = useForm<IDealFo
   validateOnMount: false
 })
 
+const openHandler = (isOpen: boolean) => {
+  if (!isOpen) {
+    $emit('close')
+  }
+}
+
 const close = () => {
-  $emit('close')
+  openHandler(false)
 }
 
 const onSubmit = handleSubmit((values) => {
@@ -68,7 +74,7 @@ defineExpose({ resetForm })
 </script>
 
 <template>
-  <UiDialog :open="isOpen" @update:open="close">
+  <UiDialog :open="isOpen" @update:open="openHandler">
     <UiDialogContent>
       <UiDialogHeader>
         <UiDialogTitle>Create Deal</UiDialogTitle>

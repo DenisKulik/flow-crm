@@ -6,7 +6,7 @@ export interface ICard {
   price: string
   createdAt: string
   companyName: string
-  status: string
+  status: DealStatus
 }
 
 export interface IColumn {

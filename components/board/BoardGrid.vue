@@ -11,7 +11,7 @@ defineProps<{
 const $emit = defineEmits<{
   drop: [deal: ICard, newStatus: DealStatus]
   openCreateDealDialog: [status: DealStatus]
-  openEditDealDialog: [deal: ICard]
+  openDealInfoDrawer: [deal: ICard]
 }>()
 
 const drop = (deal: ICard, newStatus: DealStatus): void => {
@@ -22,8 +22,8 @@ const openCreateDealDialog = (status: DealStatus): void => {
   $emit('openCreateDealDialog', status)
 }
 
-const openEditDealDialog = (deal: ICard): void => {
-  $emit('openEditDealDialog', deal)
+const openDealInfoDrawer = (deal: ICard): void => {
+  $emit('openDealInfoDrawer', deal)
 }
 </script>
 
@@ -37,7 +37,7 @@ const openEditDealDialog = (deal: ICard): void => {
       @open-create-deal-dialog="openCreateDealDialog"
     >
       <template #cards="{ cards }">
-        <DealCard v-for="card in cards" :key="card.id" :deal="card" @open-edit-deal-dialog="openEditDealDialog" />
+        <DealCard v-for="card in cards" :key="card.id" :deal="card" @open-deal-info-drawer="openDealInfoDrawer" />
       </template>
     </DealColumn>
   </div>
