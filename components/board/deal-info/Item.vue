@@ -1,10 +1,18 @@
 <script setup lang="ts">
-const { labelText = '' } = defineProps<{ labelText: string }>()
+import type { Component } from 'vue'
+
+defineProps<{
+  labelText: string
+  labelIcon?: Component
+}>()
 </script>
 
 <template>
-  <div class="space-y-1">
-    <label class="text-xs font-medium uppercase tracking-wider text-muted-foreground">{{ labelText }}</label>
-    <div class="text-sm"><slot /></div>
+  <div class="flex flex-col gap-1">
+    <div class="flex items-center gap-2 text-sm text-muted-foreground">
+      <component :is="labelIcon" v-if="labelIcon" class="h-4 w-4 text-muted-foreground" />
+      <span>{{ labelText }}</span>
+    </div>
+    <slot />
   </div>
 </template>

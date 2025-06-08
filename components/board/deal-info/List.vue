@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Building2, Calendar, DollarSign, FileText, Tag } from 'lucide-vue-next'
+import { computed } from 'vue'
 
 import { DEAL_STATUS_LABELS, LABEL_TEXT } from '@/constants'
 import type { ICard } from '@/types'
