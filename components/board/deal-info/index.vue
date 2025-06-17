@@ -39,6 +39,9 @@ const openHandler = (isOpen: boolean) => {
             <BoardDealInfoList v-if="deal" :deal />
             <p v-else class="text-center text-sm text-muted-foreground">No deal selected</p>
           </div>
+          <div class="flex flex-col gap-4 p-4">
+            <BoardDealInfoComments v-if="deal" :deal-id="deal.id" />
+          </div>
         </div>
         <UiDrawerFooter>
           <UiDrawerClose class="ml-auto">

@@ -2,15 +2,20 @@ import { nanoid } from 'nanoid'
 
 import { DB } from '@/api/appwrite'
 import { COLLECTION_DEALS, DB_ID } from '@/constants'
-import type { DealListDBType, IDealForm } from '@/types'
+import type { DealDBType, DealListDBType, IDealForm } from '@/types'
 
 interface IDealsService {
   getDeals: () => Promise<DealListDBType>
+  getDealById: (id: string) => Promise<DealDBType>
 }
 
 export class DealsService implements IDealsService {
   public getDeals(): Promise<DealListDBType> {
     return DB.listDocuments(DB_ID, COLLECTION_DEALS)
+  }
+
+  public getDealById(id: string): Promise<DealDBType> {
+    return DB.getDocument(DB_ID, COLLECTION_DEALS, id)
   }
 
   public async createDeal(deal: IDealForm): Promise<void> {
