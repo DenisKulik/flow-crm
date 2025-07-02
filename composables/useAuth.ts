@@ -1,18 +1,26 @@
 import { AuthService } from '@/api'
-import { useAuthStore } from '@/store/auth.store'
-import type { IUserForm } from '@/types'
+import { useAuthStore } from '@/stores/auth.store'
+import type { IUserForm, UserDBType } from '@/types'
 
 const authService = new AuthService()
 
 export const useAuth = () => {
   const authStore = useAuthStore()
 
+  const getAuthUser = async (): Promise<UserDBType | null> => {
+    try {
+      return await authService.getAuthUser()
+    } catch {
+      return null
+    }
+  }
+
   const login = async (values: IUserForm): Promise<void> => {
-    let user = await authService.getAuthUser()
+    let user = await getAuthUser()
 
     if (!user) {
       await authService.login(values)
-      user = await authService.getAuthUser()
+      user = await getAuthUser()
     }
 
     authStore.setUser({
@@ -32,6 +40,7 @@ export const useAuth = () => {
   }
 
   return {
+    getAuthUser,
     login,
     logout,
     register

@@ -2,8 +2,8 @@
 import { ChevronUp, UserRound } from 'lucide-vue-next'
 
 import { toast } from '@/components/ui/toast'
-import { useAppStore } from '@/store/app.store'
-import { useAuthStore } from '@/store/auth.store'
+import { useAppStore } from '@/stores/app.store'
+import { useAuthStore } from '@/stores/auth.store'
 
 const router = useRouter()
 

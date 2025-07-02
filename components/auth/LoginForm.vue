@@ -4,11 +4,11 @@ import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
 import * as z from 'zod'
 
-const emit = defineEmits(['submit'])
+const $emit = defineEmits(['submit'])
 
 const formSchema = toTypedSchema(
   z.object({
-    email: z.string().email(),
+    email: z.string().email().max(50),
     password: z.string().min(8).max(50)
   })
 )
@@ -22,7 +22,7 @@ const { isFieldDirty, handleSubmit, resetForm } = useForm({
   validateOnMount: false
 })
 
-const onSubmit = handleSubmit((values) => emit('submit', values))
+const onSubmit = handleSubmit((values) => $emit('submit', values))
 
 defineExpose({ resetForm })
 </script>

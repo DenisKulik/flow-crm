@@ -1,13 +1,12 @@
-import { account } from '~/lib/appwrite'
-import { useAppStore } from '~/store/app.store'
-import { useAuthStore } from '~/store/auth.store'
+import { useAppStore } from '@/stores/app.store'
+import { useAuthStore } from '@/stores/auth.store'
 
 export const useAppInit = async () => {
   const authStore = useAuthStore()
   const appStore = useAppStore()
 
   try {
-    const user = await account.get()
+    const user = await useAuth().getAuthUser()
     if (user) {
       authStore.setUser({
         email: user.email,

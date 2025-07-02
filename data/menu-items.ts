@@ -8,7 +8,7 @@ export interface IMenuItem {
   icon: FunctionalComponent<LucideProps>
 }
 
-export const MENU_ITEMS: IMenuItem[] = [
+export const menuItems: IMenuItem[] = [
   { id: 1, title: 'Home', url: '/', icon: Home },
   { id: 2, title: 'Customers', url: '/customers', icon: UsersRound }
 ]

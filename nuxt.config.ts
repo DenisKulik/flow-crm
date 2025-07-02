@@ -25,5 +25,8 @@ export default defineNuxtConfig({
   },
   pinia: {
     storesDirs: ['./stores/**']
+  },
+  build: {
+    transpile: ['vee-validate']
   }
 })

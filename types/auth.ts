@@ -1,6 +1,6 @@
 import type { Models } from 'appwrite'
 
-export type AppwriteUser = Models.User<Models.Preferences>
+export type UserDBType = Models.User<Models.Preferences>
 
 export interface IUser {
   email: string

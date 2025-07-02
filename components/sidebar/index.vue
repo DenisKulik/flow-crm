@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { MENU_ITEMS } from '@/constants'
+import { menuItems } from '@/data'
 </script>
 
 <template>
@@ -8,7 +8,7 @@ import { MENU_ITEMS } from '@/constants'
       <UiSidebarGroup>
         <UiSidebarGroupLabel>Flow CRM</UiSidebarGroupLabel>
         <UiSidebarGroupContent>
-          <SidebarMenuList :items="MENU_ITEMS" />
+          <SidebarMenuList :items="menuItems" />
         </UiSidebarGroupContent>
       </UiSidebarGroup>
     </UiSidebarContent>
