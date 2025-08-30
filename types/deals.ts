@@ -1,16 +1,7 @@
 import type { Models } from 'appwrite'
 
-interface IBaseEntity {
-  $id: string
-  $createdAt: string
-}
-
-export interface ICustomer extends IBaseEntity {
-  name: string
-  email: string
-  avatar_url: string
-  from_source?: string
-}
+import type { IBaseEntity } from '.'
+import type { ICustomer } from './customers'
 
 export interface IComment extends IBaseEntity {
   text: string
