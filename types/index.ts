@@ -12,3 +12,7 @@ export interface IBaseEntity {
 export interface IFormMethods {
   resetForm: () => void
 }
+
+export interface IInputFileEvent extends Event {
+  target: HTMLInputElement & EventTarget & { files: FileList }
+}
