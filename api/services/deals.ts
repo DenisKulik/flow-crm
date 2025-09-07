@@ -7,6 +7,8 @@ import type { DealDBType, DealListDBType, IDealForm } from '@/types'
 interface IDealsService {
   getDeals: () => Promise<DealListDBType>
   getDealById: (id: string) => Promise<DealDBType>
+  createDeal: (deal: IDealForm) => Promise<void>
+  updateDeal: (id: string, deal: Partial<IDealForm>) => Promise<void>
 }
 
 export class DealsService implements IDealsService {
