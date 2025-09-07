@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import CustomerTable from '@/components/table/index.vue'
+import CustomerTable from '@/components/customers/index.vue'
 
 useSeoMeta({ title: 'Customers | Flow CRM' })
 </script>
