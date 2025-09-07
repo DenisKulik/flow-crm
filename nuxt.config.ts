@@ -28,5 +28,6 @@ export default defineNuxtConfig({
   },
   build: {
     transpile: ['vee-validate']
-  }
+  },
+  nitro: { preset: 'vercel' }
 })
