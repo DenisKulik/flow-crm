@@ -21,10 +21,10 @@ export default defineNuxtConfig({
     'pinia-plugin-persistedstate/nuxt'
   ],
   shadcn: {
-    componentDir: './components/ui'
+    componentDir: './app/components/ui'
   },
   pinia: {
-    storesDirs: ['./stores/**']
+    storesDirs: ['./app/stores/**']
   },
   build: {
     transpile: ['vee-validate']

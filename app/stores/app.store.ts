@@ -1,3 +1,5 @@
+import { defineStore } from 'pinia'
+
 export const useAppStore = defineStore('app', () => {
   const isInitialized = ref(false)
   const loadingTasks = ref<Set<string>>(new Set())

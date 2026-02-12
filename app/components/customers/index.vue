@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useAppStore } from '~/stores/app.store'
+
 const appStore = useAppStore()
 const { startLoading, stopLoading } = appStore
 const { data: customers, status, error } = useCustomersQuery()
