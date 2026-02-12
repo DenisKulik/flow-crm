@@ -43,14 +43,16 @@ export const transformToBoard = (data: DealListDBType): IColumn[] => {
 
   deals.forEach((deal) => {
     const columnIdx = board.findIndex((column) => column.status === deal.status)
-    board[columnIdx].cards.push({
-      id: deal.$id,
-      name: deal.name,
-      price: formatPrice(deal.price),
-      companyName: deal.customer.name,
-      createdAt: formatDate(deal.$createdAt),
-      status: deal.status
-    })
+    if (columnIdx !== -1 && board[columnIdx]) {
+      board[columnIdx].cards.push({
+        id: deal.$id,
+        name: deal.name,
+        price: formatPrice(deal.price),
+        companyName: deal.customer.name,
+        createdAt: formatDate(deal.$createdAt),
+        status: deal.status
+      })
+    }
   })
 
   return board

@@ -1,6 +1,6 @@
 import type { Models } from 'appwrite'
 
-import type { IBaseEntity } from '.'
+import type { IBaseEntity } from '../flow-crm'
 
 export interface ICustomer extends IBaseEntity {
   name: string

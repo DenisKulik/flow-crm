@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { DealStatus, ICard, IColumn } from '@/types'
+import type { DealStatus, ICard, IColumn } from '~/types'
 
 import DealCard from './DealCard.vue'
 import DealColumn from './DealColumn.vue'
