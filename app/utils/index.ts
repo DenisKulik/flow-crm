@@ -39,7 +39,7 @@ export const getStatusColor = (status: DealStatus) => {
 
 export const transformToBoard = (data: DealListDBType): IColumn[] => {
   const board = structuredClone(dealColumns)
-  const deals = data.documents as unknown as IDeal[]
+  const deals = data.rows as unknown as IDeal[]
 
   deals.forEach((deal) => {
     const columnIdx = board.findIndex((column) => column.status === deal.status)
@@ -59,7 +59,7 @@ export const transformToBoard = (data: DealListDBType): IColumn[] => {
 }
 
 export const transformToCustomersTable = (data: CustomerListDBType): ICustomer[] => {
-  const customers = data.documents as unknown as ICustomer[]
+  const customers = data.rows as unknown as ICustomer[]
   return customers.map((customer) => ({
     ...customer
   }))

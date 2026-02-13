@@ -1,6 +1,6 @@
 import type { Models } from 'appwrite'
 
-import type { IBaseEntity } from '../flow-crm'
+import type { IBaseEntity } from '~/types'
 
 export interface ICustomer extends IBaseEntity {
   name: string
@@ -13,7 +13,7 @@ export type CustomerDBType = Models.Document & ICustomer
 
 export type CustomerListDBType = {
   total: number
-  documents: CustomerDBType[]
+  rows: CustomerDBType[]
 }
 
 export type ICustomerForm = Pick<ICustomer, 'name' | 'email' | 'from_source'> & {

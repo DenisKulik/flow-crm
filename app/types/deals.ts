@@ -1,11 +1,6 @@
 import type { Models } from 'appwrite'
 
-import type { IBaseEntity } from '.'
-import type { ICustomer } from './customers'
-
-export interface IComment extends IBaseEntity {
-  text: string
-}
+import type { IBaseEntity, IComment, ICustomer } from '~/types'
 
 export enum DealStatus {
   todo = 'todo',
@@ -27,7 +22,7 @@ export type DealDBType = Models.Document & IDeal
 
 export type DealListDBType = {
   total: number
-  documents: DealDBType[]
+  rows: DealDBType[]
 }
 
 export interface IDealForm extends Omit<IDeal, 'customer' | 'comments'> {

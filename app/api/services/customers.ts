@@ -12,22 +12,41 @@ interface ICustomersService {
 
 export class CustomersService implements ICustomersService {
   public getCustomers(): Promise<CustomerListDBType> {
-    return DB.listDocuments(DB_ID, COLLECTION_CUSTOMERS)
+    return DB.listRows({
+      databaseId: DB_ID,
+      tableId: COLLECTION_CUSTOMERS
+    })
   }
 
   public getCustomerById(id: string): Promise<CustomerDBType> {
-    return DB.getDocument(DB_ID, COLLECTION_CUSTOMERS, id)
+    return DB.getRow({
+      databaseId: DB_ID,
+      tableId: COLLECTION_CUSTOMERS,
+      rowId: id
+    })
   }
 
   public updateCustomer(id: string, data: ICustomerForm): Promise<CustomerDBType> {
-    return DB.updateDocument(DB_ID, COLLECTION_CUSTOMERS, id, data)
+    return DB.updateRow({
+      databaseId: DB_ID,
+      tableId: COLLECTION_CUSTOMERS,
+      rowId: id,
+      data
+    })
   }
 
   public uploadImage(id: string, file: File): Promise<Models.File> {
-    return storage.createFile(STORAGE_ID, id, file)
+    return storage.createFile({
+      bucketId: STORAGE_ID,
+      fileId: id,
+      file
+    })
   }
 
   public getFileDownload(storageId: string, fileId: string): string {
-    return storage.getFileDownload(storageId, fileId)
+    return storage.getFileDownload({
+      bucketId: storageId,
+      fileId
+    })
   }
 }

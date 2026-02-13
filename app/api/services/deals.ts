@@ -13,19 +13,36 @@ interface IDealsService {
 
 export class DealsService implements IDealsService {
   public getDeals(): Promise<DealListDBType> {
-    return DB.listDocuments(DB_ID, COLLECTION_DEALS)
+    return DB.listRows({
+      databaseId: DB_ID,
+      tableId: COLLECTION_DEALS
+    })
   }
 
   public getDealById(id: string): Promise<DealDBType> {
-    return DB.getDocument(DB_ID, COLLECTION_DEALS, id)
+    return DB.getRow({
+      databaseId: DB_ID,
+      tableId: COLLECTION_DEALS,
+      rowId: id
+    })
   }
 
   public async createDeal(deal: IDealForm): Promise<void> {
     const dealId = nanoid()
-    await DB.createDocument(DB_ID, COLLECTION_DEALS, dealId, deal)
+    await DB.createRow({
+      databaseId: DB_ID,
+      tableId: COLLECTION_DEALS,
+      rowId: dealId,
+      data: deal
+    })
   }
 
   public async updateDeal(id: string, deal: Partial<IDealForm>): Promise<void> {
-    await DB.updateDocument(DB_ID, COLLECTION_DEALS, id, deal)
+    await DB.updateRow({
+      databaseId: DB_ID,
+      tableId: COLLECTION_DEALS,
+      rowId: id,
+      data: deal
+    })
   }
 }

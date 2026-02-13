@@ -9,6 +9,14 @@ interface ICommentService {
 
 export class CommentService implements ICommentService {
   public async createComment(text: string, deal: string): Promise<void> {
-    await DB.createDocument(DB_ID, COLLECTION_COMMENTS, nanoid(), { text, deal })
+    await DB.createRow({
+      databaseId: DB_ID,
+      tableId: COLLECTION_COMMENTS,
+      rowId: nanoid(),
+      data: {
+        text,
+        deal
+      }
+    })
   }
 }
