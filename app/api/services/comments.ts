@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid'
 
 import { DB } from '@/api/appwrite'
-import { COLLECTION_COMMENTS, DB_ID } from '~/constants'
+import { COLLECTION_COMMENTS, DB_ID } from '@/constants'
 
 interface ICommentService {
   createComment(text: string, dealId: string): Promise<void>

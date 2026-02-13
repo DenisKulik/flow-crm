@@ -2,7 +2,7 @@ import type { Models } from 'appwrite'
 
 import { DB, storage } from '@/api/appwrite'
 import { COLLECTION_CUSTOMERS, DB_ID, STORAGE_ID } from '@/constants'
-import type { CustomerDBType, CustomerListDBType, ICustomerForm } from '~/types'
+import type { CustomerDBType, CustomerListDBType, ICustomerForm } from '@/types'
 
 interface ICustomersService {
   getCustomers: () => Promise<CustomerListDBType>

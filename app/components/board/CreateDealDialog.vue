@@ -3,8 +3,8 @@ import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
 import { z } from 'zod'
 
+import { DEAL_STATUS_LABELS } from '@/constants'
 import { DealStatus, type IDealForm } from '@/types'
-import { DEAL_STATUS_LABELS } from '~/constants'
 
 const {
   isOpen,

@@ -1,6 +1,6 @@
 import type { Models } from 'appwrite'
 
-import type { IBaseEntity, IComment, ICustomer } from '~/types'
+import type { IBaseEntity, IComment, ICustomer } from '@/types'
 
 export enum DealStatus {
   todo = 'todo',

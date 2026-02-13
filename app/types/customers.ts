@@ -1,6 +1,6 @@
 import type { Models } from 'appwrite'
 
-import type { IBaseEntity } from '~/types'
+import type { IBaseEntity } from '@/types'
 
 export interface ICustomer extends IBaseEntity {
   name: string

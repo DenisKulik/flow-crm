@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ICustomerForm } from '~/types'
+import type { ICustomerForm } from '@/types'
 
 useSeoMeta({ title: 'Edit customer | Flow CRM' })
 

@@ -1,4 +1,4 @@
-import { CommentService } from '~/api'
+import { CommentService } from '@/api'
 
 const commentService = new CommentService()
 

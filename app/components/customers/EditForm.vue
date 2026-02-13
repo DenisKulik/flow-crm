@@ -3,7 +3,7 @@ import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
 import { z } from 'zod'
 
-import type { ICustomerForm } from '~/types'
+import type { ICustomerForm } from '@/types'
 
 interface Props {
   data: ICustomerForm

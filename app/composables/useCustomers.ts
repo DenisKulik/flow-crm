@@ -2,8 +2,8 @@ import type { Models } from 'appwrite'
 import { nanoid } from 'nanoid'
 
 import { CustomersService } from '@/api'
+import { STORAGE_ID } from '@/constants'
 import type { ICustomerForm } from '@/types'
-import { STORAGE_ID } from '~/constants'
 
 const customersService = new CustomersService()
 
