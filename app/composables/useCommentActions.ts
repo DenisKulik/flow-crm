@@ -7,7 +7,12 @@ export const useCommentActions = (dealId: string) => {
     await commentService.createComment(text, dealId)
   }
 
+  const deleteComment = async (commentId: string) => {
+    await commentService.deleteComment(commentId)
+  }
+
   return {
-    createComment
+    createComment,
+    deleteComment
   }
 }

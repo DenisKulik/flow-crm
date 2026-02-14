@@ -3,7 +3,16 @@ import { Temporal } from '@js-temporal/polyfill'
 import { toast } from '@/components/ui/toast'
 import { STATUS_COLORS } from '@/constants'
 import { dealColumns } from '@/data'
-import type { CustomerListDBType, DealListDBType, DealStatus, IColumn, ICustomer, IDeal } from '@/types'
+import type {
+  CommentListDBType,
+  CustomerListDBType,
+  DealListDBType,
+  DealStatus,
+  IColumn,
+  IComment,
+  ICustomer,
+  IDeal
+} from '@/types'
 
 export const showErrorToast = (error: unknown, fallback = 'Something went wrong, please try again.') => {
   toast({
@@ -62,5 +71,13 @@ export const transformToCustomersTable = (data: CustomerListDBType): ICustomer[]
   const customers = data.rows as unknown as ICustomer[]
   return customers.map((customer) => ({
     ...customer
+  }))
+}
+
+export const transformComments = (data: CommentListDBType): IComment[] => {
+  const comments = data.rows as unknown as IComment[]
+  return comments.map((comment) => ({
+    ...comment,
+    $createdAt: formatDate(comment.$createdAt)
   }))
 }
