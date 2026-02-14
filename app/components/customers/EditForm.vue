@@ -11,12 +11,12 @@ interface Props {
   isAvatarUploading: boolean
 }
 
+const { data } = defineProps<Props>()
+
 const $emit = defineEmits<{
   submit: [ICustomerForm]
   uploadFile: [File]
 }>()
-
-const { data } = defineProps<Props>()
 
 const formSchema = toTypedSchema(
   z.object({

@@ -4,12 +4,12 @@ interface Props {
   loading?: boolean
 }
 
+defineProps<Props>()
+
 const $emit = defineEmits<{
   change: [File]
   click: []
 }>()
-
-defineProps<Props>()
 
 const dragOver = ref(false)
 const fileInput = ref<HTMLInputElement>()

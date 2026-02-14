@@ -3,12 +3,13 @@ const { dealId } = defineProps<{
   dealId: string
 }>()
 
+//  TODO: сделать отдельный запрос на получение комментариев по dealId
 const { data, refresh, status, error } = useDealQuery(dealId)
-const { createComment } = useCreateComment(dealId)
+const { createComment } = useCommentActions(dealId)
 
-const comments = computed(() =>
-  data.value?.comments.map((comment) => ({ ...comment, $createdAt: formatDate(comment.$createdAt) }))
-)
+const comments = computed(() => {
+  return data.value?.comments?.map((comment) => ({ ...comment, $createdAt: formatDate(comment.$createdAt) }))
+})
 
 const commentValue = ref<string>('')
 

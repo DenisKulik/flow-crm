@@ -7,7 +7,7 @@ import type { ICustomerForm } from '@/types'
 
 const customersService = new CustomersService()
 
-export const useCustomers = () => {
+export const useCustomerActions = () => {
   const updateCustomer = async (id: string, data: ICustomerForm) => {
     await customersService.updateCustomer(id, data)
   }

@@ -11,7 +11,7 @@ useSeoMeta({ title: 'Home | Flow CRM' })
 const appStore = useAppStore()
 const { startLoading, stopLoading } = appStore
 const { data: board, status, refresh, error } = useDealsQuery()
-const { createDeal, updateDeal } = useDeals()
+const { createDeal, updateDeal } = useDealActions()
 
 const isOpenCreateDealDialog = ref<boolean>(false)
 const createDealStatus = ref<DealStatus>()

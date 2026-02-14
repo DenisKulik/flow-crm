@@ -3,7 +3,7 @@ import type { IDealForm } from '@/types'
 
 const dealsService = new DealsService()
 
-export const useDeals = () => {
+export const useDealActions = () => {
   const createDeal = async (data: IDealForm) => {
     await dealsService.createDeal(data)
   }

@@ -2,8 +2,10 @@ import { CustomersService } from '@/api'
 
 const customersService = new CustomersService()
 
-export const useCustomersQuery = () =>
-  useClientAsyncData('customers', async () => {
+// TODO: рефакторинг transform
+export const useCustomersQuery = () => {
+  return useClientAsyncData('customers', async () => {
     const data = await customersService.getCustomers()
     return transformToCustomersTable(data)
   })
+}
