@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAppStore } from '~/stores/app.store'
+import { useAppStore } from '@/stores/app.store'
 
 const appStore = useAppStore()
 const { startLoading, stopLoading } = appStore
@@ -34,7 +34,7 @@ watch(error, (newError) => {
     <UiTableBody>
       <UiTableRow v-for="customer in customers" :key="customer.$id">
         <UiTableCell>
-          <NuxtLink :to="`/customers/${customer.$id}`">
+          <NuxtLink :to="{ name: 'customers-id', params: { id: customer.$id } }">
             <UiAvatar>
               <UiAvatarImage :src="customer.avatar_url" title="Go to customer" />
             </UiAvatar>

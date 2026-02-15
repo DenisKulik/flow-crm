@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useAppStore } from '~/stores/app.store'
-import { DealStatus, type ICard, type IDealForm, type IFormMethods } from '~/types'
+import { useAppStore } from '@/stores/app.store'
+import { DealStatus, type ICard, type IDealForm, type IFormMethods } from '@/types'
 
 import BoardGrid from './BoardGrid.vue'
 import BoardHeader from './BoardHeader.vue'
@@ -11,7 +11,7 @@ useSeoMeta({ title: 'Home | Flow CRM' })
 const appStore = useAppStore()
 const { startLoading, stopLoading } = appStore
 const { data: board, status, refresh, error } = useDealsQuery()
-const { createDeal, updateDeal } = useDeals()
+const { createDeal, updateDeal } = useDealActions()
 
 const isOpenCreateDealDialog = ref<boolean>(false)
 const createDealStatus = ref<DealStatus>()

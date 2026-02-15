@@ -1,6 +1,6 @@
 <script setup>
 import Toaster from '@/components/ui/toast/Toaster.vue'
-import { useAppStore } from '~/stores/app.store.js'
+import { useAppStore } from '@/stores/app.store.js'
 
 useHead({
   htmlAttrs: {
@@ -17,7 +17,7 @@ const { isInitialized, isLoading } = storeToRefs(appStore)
 <template>
   <Toaster />
   <NuxtLayout>
-    <NuxtPage />
+    <NuxtPage keepalive />
   </NuxtLayout>
   <AppLoader
     v-show="!isInitialized || isLoading"

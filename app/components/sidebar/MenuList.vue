@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IMenuItem } from '@/constants'
+import type { IMenuItem } from '@/data/menu-items'
 
 defineProps<{
   items: IMenuItem[]

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ICustomerForm } from '~/types'
+import type { ICustomerForm } from '@/types'
 
 useSeoMeta({ title: 'Edit customer | Flow CRM' })
 
@@ -7,7 +7,7 @@ const route = useRoute()
 const { id: customerId } = route.params
 
 const { data, status, error } = useCustomerQuery(customerId as string)
-const { updateCustomer, uploadCustomerAvatar, getCustomerAvatarUrl } = useCustomers()
+const { updateCustomer, uploadCustomerAvatar, getCustomerAvatarUrl } = useCustomerActions()
 
 const isAvatarUploading = ref(false)
 const formRef = useTemplateRef<HTMLFormElement>('formRef')

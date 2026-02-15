@@ -21,7 +21,7 @@ const preparedDeal = computed(() => [
 <template>
   <div class="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-secondary scrollbar-track-transparent">
     <div class="flex flex-col gap-4 p-4">
-      <BoardDealInfoItem v-for="item in preparedDeal" :key="item.key" :label-text="item.label" :label-icon="item.icon">
+      <BoardDealInfoItem v-for="item in preparedDeal" :key="item.key" :label-text="item.label!" :label-icon="item.icon">
         <div class="flex items-center gap-2">
           <UiBadge v-if="item.key === 'status'" variant="outline" class="font-medium">
             {{ item.value }}

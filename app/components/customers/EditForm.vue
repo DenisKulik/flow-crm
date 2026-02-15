@@ -3,7 +3,7 @@ import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
 import { z } from 'zod'
 
-import type { ICustomerForm } from '~/types'
+import type { ICustomerForm } from '@/types'
 
 interface Props {
   data: ICustomerForm
@@ -11,12 +11,12 @@ interface Props {
   isAvatarUploading: boolean
 }
 
+const { data } = defineProps<Props>()
+
 const $emit = defineEmits<{
   submit: [ICustomerForm]
   uploadFile: [File]
 }>()
-
-const { data } = defineProps<Props>()
 
 const formSchema = toTypedSchema(
   z.object({

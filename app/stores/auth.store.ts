@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-import type { IUser } from '~/types'
+import type { IUser } from '@/types'
 
 const getDefaultState = (): { user: IUser } => ({
   user: {

@@ -17,16 +17,23 @@ export class AuthService implements IAuthService {
 
   public async login(values: IUserForm): Promise<void> {
     const { email, password } = values
-    await account.createEmailPasswordSession(email, password)
+    await account.createEmailPasswordSession({ email, password })
   }
 
   public async logout(): Promise<void> {
-    await account.deleteSession('current')
+    await account.deleteSession({
+      sessionId: 'current'
+    })
   }
 
   public async register(values: IUserForm): Promise<void> {
     const { email, password, name } = values
     const userId = nanoid()
-    await account.create(userId, email, password, name)
+    await account.create({
+      userId,
+      email,
+      password,
+      name
+    })
   }
 }
