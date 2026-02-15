@@ -3,14 +3,10 @@ import { dealColumns } from '@/data'
 
 const dealsService = new DealsService()
 
-export const useDealsQuery = () =>
-  useClientAsyncData(
-    'deals',
-    async () => {
-      const data = await dealsService.getDeals()
-      return transformToBoard(data)
-    },
-    {
-      default: () => dealColumns
-    }
-  )
+export const useDealsQuery = () => {
+  return useLazyAsyncData('deals', async () => await dealsService.getDeals(), {
+    server: false,
+    default: () => dealColumns,
+    transform: transformToBoard
+  })
+}

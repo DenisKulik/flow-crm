@@ -17,7 +17,7 @@ const { isInitialized, isLoading } = storeToRefs(appStore)
 <template>
   <Toaster />
   <NuxtLayout>
-    <NuxtPage />
+    <NuxtPage keepalive />
   </NuxtLayout>
   <AppLoader
     v-show="!isInitialized || isLoading"
