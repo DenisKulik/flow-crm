@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { DragDropProvider, type DragEndEvent } from '@dnd-kit/vue'
+
 import { useAppStore } from '@/stores/app.store'
 import { DealStatus, type ICard, type IDealForm, type IFormMethods } from '@/types'
 
@@ -69,6 +71,21 @@ const changeDealStatus = async (card: ICard, newStatus: DealStatus) => {
   }
 }
 
+const handleDragEnd = async (event: DragEndEvent) => {
+  if (event.canceled) return
+
+  const sourceId = event.operation?.source?.id
+  const targetId = event.operation?.target?.id
+
+  if (!sourceId || !targetId) return
+  if (sourceId === targetId) return
+
+  const card = board.value?.flatMap((c) => c.cards).find((item) => item.id === sourceId)
+  if (!card) return
+
+  await changeDealStatus(card, targetId as DealStatus)
+}
+
 watch(status, (newStatus) => {
   if (newStatus === 'pending') {
     startLoading('deals')
@@ -95,12 +112,13 @@ watch(isOpenCreateDealDialog, (newIsOpen) => {
 
 <template>
   <BoardHeader class="mb-6" @open-create-deal-dialog="openCreateDealDialog" />
-  <BoardGrid
-    :board="board"
-    @drop="changeDealStatus"
-    @open-create-deal-dialog="openCreateDealDialog"
-    @open-deal-info-drawer="openDealInfoDrawer"
-  />
+  <DragDropProvider @drag-end="handleDragEnd">
+    <BoardGrid
+      :board="board"
+      @open-create-deal-dialog="openCreateDealDialog"
+      @open-deal-info-drawer="openDealInfoDrawer"
+    />
+  </DragDropProvider>
   <CreateDealDialog
     ref="crateDealForm"
     :is-open="isOpenCreateDealDialog"
