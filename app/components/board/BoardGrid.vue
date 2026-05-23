@@ -14,10 +14,6 @@ const $emit = defineEmits<{
   openDealInfoDrawer: [deal: ICard]
 }>()
 
-const drop = (deal: ICard, newStatus: DealStatus): void => {
-  $emit('drop', deal, newStatus)
-}
-
 const openCreateDealDialog = (status: DealStatus): void => {
   $emit('openCreateDealDialog', status)
 }
@@ -33,7 +29,6 @@ const openDealInfoDrawer = (deal: ICard): void => {
       v-for="column in board"
       :key="column.status"
       :column="column"
-      @drop="drop"
       @open-create-deal-dialog="openCreateDealDialog"
     >
       <template #cards="{ cards }">

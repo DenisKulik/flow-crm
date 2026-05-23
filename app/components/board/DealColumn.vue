@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { useDroppable } from '@dnd-kit/vue'
 import { Plus } from 'lucide-vue-next'
 
-import { useDragAndDrop } from '@/composables/useDragAndDrop'
 import type { DealStatus, ICard, IColumn } from '@/types'
 
 const { column } = defineProps<{
@@ -13,15 +13,16 @@ const $emit = defineEmits<{
   drop: [deal: ICard, newStatus: DealStatus]
 }>()
 
-const { isDraggingOver, onDragOver, onDragLeave, onDrop } = useDragAndDrop()
+const root = ref<HTMLElement | null>(null)
+
+const { isDropTarget } = useDroppable({
+  id: column.status,
+  element: root
+})
 
 const statusColorValue = getStatusColor(column.status)
 const dealCount = computed(() => column.cards.length)
 const isEmpty = computed(() => dealCount.value === 0)
-
-const handleDrop = (e: DragEvent) => {
-  onDrop(e, $emit, column.status)
-}
 
 const openCreateDealDialog = () => {
   $emit('openCreateDealDialog', column.status)
@@ -30,11 +31,9 @@ const openCreateDealDialog = () => {
 
 <template>
   <div
+    ref="root"
     class="select-none rounded-xl bg-secondary p-4 min-h-[500px] flex flex-col transition-colors duration-200"
-    :class="{ 'ring-2 ring-primary/50': isDraggingOver }"
-    @dragover="onDragOver"
-    @dragleave="onDragLeave"
-    @drop="handleDrop"
+    :class="{ 'ring-2 ring-primary/50': isDropTarget }"
   >
     <div class="flex items-center justify-between mb-3 border-b-2 pb-2" :style="{ borderColor: statusColorValue }">
       <div class="flex items-center gap-2">
