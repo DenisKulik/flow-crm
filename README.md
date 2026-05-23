@@ -1,75 +1,90 @@
-# Nuxt Minimal Starter
+# Flow CRM
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+CRM-система для управления потоком сделок и клиентами, построенная на базе Nuxt 3 и Appwrite.
 
-## Setup
+## ✨ Особенности
 
-Make sure to install dependencies:
+- Управление сделками (создание, просмотр, обновление, удаление)
+- Управление клиентами
+- Интуитивно понятный пользовательский интерфейс на базе Shadcn-Vue
+- Быстрая разработка с Nuxt 4 (Vue 3, Composition API, `<script setup>`)
+- Гибкая и масштабируемая архитектура с Appwrite как BaaS
 
-```bash
-# npm
-npm install
+## 🚀 Используемые технологии
 
-# pnpm
-pnpm install
+- **Фреймворк:** Nuxt.js (Vue.js 3, Composition API, `<script setup>`)
+- **Бэкенд:** Appwrite (BaaS для базы данных и авторизации)
+- **Стилизация:** Tailwind CSS, Shadcn-Vue UI
+- **Управление состоянием:** Pinia с персистентностью
+- **Иконки:** Lucide-vue-next
+- **Drag and Drop:** `@dnd-kit/vue`
+- **Формы и валидация:** `vee-validate`, `@vee-validate/zod`, `zod`
+- **Другое:** `@vueuse/core`, `@tanstack/vue-table`, `@formkit/auto-animate`
 
-# yarn
-yarn install
+## 🛠 Установка
 
-# bun
-bun install
-```
+Предпочтительный менеджер пакетов: `pnpm`.
 
-## Development Server
+1.  **Клонировать репозиторий:**
 
-Start the development server on `http://localhost:3000`:
+    ```bash
+    git clone https://github.com/ваше-имя-пользователя/flow-crm.git
+    cd flow-crm
+    ```
 
-```bash
-# npm
-npm run dev
+2.  **Установить зависимости:**
+    ```bash
+    pnpm install
+    ```
 
-# pnpm
-pnpm dev
+## 💻 Команды для разработки
 
-# yarn
-yarn dev
+- **Запуск dev сервера:**
 
-# bun
-bun run dev
-```
+  ```bash
+  pnpm dev
+  ```
 
-## Production
+  Приложение будет доступно по адресу `http://localhost:3000`.
 
-Build the application for production:
+- **Сборка для продакшена:**
 
-```bash
-# npm
-npm run build
+  ```bash
+  pnpm build
+  ```
 
-# pnpm
-pnpm build
+- **Предварительный просмотр продакшн-сборки:**
 
-# yarn
-yarn build
+  ```bash
+  pnpm preview
+  ```
 
-# bun
-bun run build
-```
+- **Линтинг:**
 
-Locally preview production build:
+  ```bash
+  pnpm run lint:eslint
+  ```
 
-```bash
-# npm
-npm run preview
+- **Линтинг и автоформатирование (исправление ошибок):**
+  ```bash
+  pnpm run lintfix
+  ```
 
-# pnpm
-pnpm preview
+## 📂 Структура проекта
 
-# yarn
-yarn preview
+- `app/api/services`: Клиентские сервисы для взаимодействия с Appwrite API.
+- `app/components`: Переиспользуемые Vue-компоненты (UI, board, auth, customers, sidebar).
+- `app/composables`: Функции Composition API (хуки) для переиспользуемой логики и запросов данных.
+- `app/constants`: Константы (ID коллекций Appwrite, статусы сделок).
+- `app/data`: Статические данные (пункты меню, колонки доски).
+- `app/layouts`: Макеты страниц Nuxt.
+- `app/middleware`: Nuxt middleware (например, `auth.global.ts`).
+- `app/pages`: Страницы приложения Nuxt.
+- `app/plugins`: Nuxt плагины (для персистентности Pinia).
+- `app/stores`: Pinia-хранилища для управления состоянием.
+- `app/types`: Определение TypeScript-типов и интерфейсов.
+- `app/utils`: Вспомогательные утилиты и функции.
 
-# bun
-bun run preview
-```
+---
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+© 2026 Flow CRM. Все права защищены.
