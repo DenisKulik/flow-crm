@@ -1,4 +1,6 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import { config } from 'dotenv'
+config()
+
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
@@ -29,5 +31,12 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vee-validate']
   },
-  nitro: { preset: 'vercel' }
+  nitro: { preset: 'vercel' },
+  runtimeConfig: {
+    appwriteKey: process.env.APPWRITE_KEY,
+    public: {
+      appwriteEndpoint: process.env.NUXT_PUBLIC_APPWRITE_ENDPOINT,
+      appwriteProjectId: process.env.NUXT_PUBLIC_APPWRITE_PROJECT
+    }
+  }
 })
