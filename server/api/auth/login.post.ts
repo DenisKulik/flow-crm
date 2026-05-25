@@ -1,25 +1,20 @@
 import { SESSION_COOKIE } from '~~/server/constants'
-
-import { createAdminClient } from '../../lib/appwrite'
+import { createAdminClient } from '~~/server/lib/appwrite'
 
 export default defineEventHandler(async (event) => {
-  const formData = await readFormData(event)
-  const email = formData.get('email')
-  const password = formData.get('password')
+  const body = await readBody(event)
+  const { email, password } = body || {}
 
   if (!email || !password) {
     throw createError({ statusCode: 400, statusMessage: 'Email and password are required' })
   }
 
-  const emailStr = email.toString()
-  const passwordStr = password.toString()
-
   const { account } = createAdminClient()
 
   try {
     const session = await account.createEmailPasswordSession({
-      email: emailStr,
-      password: passwordStr
+      email,
+      password
     })
 
     setCookie(event, SESSION_COOKIE, session.secret, {
@@ -30,7 +25,7 @@ export default defineEventHandler(async (event) => {
       sameSite: 'strict'
     })
 
-    await sendRedirect(event, '/')
+    return { success: true }
   } catch {
     throw createError({ statusCode: 401, statusMessage: 'Invalid email or password' })
   }

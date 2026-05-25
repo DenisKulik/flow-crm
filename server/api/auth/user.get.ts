@@ -1,11 +1,11 @@
-export default defineEventHandler(async (event) => {
-  if (!event.context.user) {
+import type { UserDBType } from '~~/server/types/auth'
+
+export default defineEventHandler(async (event): Promise<UserDBType | null> => {
+  const user = event.context.user
+
+  if (!user) {
     return null
   }
 
-  return {
-    email: event.context.user.email,
-    name: event.context.user.name,
-    status: true
-  }
+  return user
 })

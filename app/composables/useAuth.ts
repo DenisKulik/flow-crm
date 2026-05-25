@@ -6,7 +6,7 @@ export const useAuth = () => {
 
   const getAuthUser = async (): Promise<UserDBType | null> => {
     try {
-      return await useFetch('api/auth/user')
+      return await $fetch<UserDBType>('api/auth/user')
     } catch {
       return null
     }

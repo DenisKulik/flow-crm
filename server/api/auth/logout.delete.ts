@@ -1,6 +1,5 @@
 import { SESSION_COOKIE } from '~~/server/constants'
-
-import { createSessionClient } from '../../lib/appwrite'
+import { createSessionClient } from '~~/server/lib/appwrite'
 
 export default defineEventHandler(async (event) => {
   const { account } = createSessionClient(event)

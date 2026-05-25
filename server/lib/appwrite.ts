@@ -5,8 +5,8 @@ import { SESSION_COOKIE } from '../constants'
 
 export function createAdminClient() {
   const client = new Client()
-    .setEndpoint(process.env.PUBLIC_APPWRITE_ENDPOINT!)
-    .setProject(process.env.PUBLIC_APPWRITE_PROJECT!)
+    .setEndpoint(process.env.NUXT_PUBLIC_APPWRITE_ENDPOINT!)
+    .setProject(process.env.NUXT_PUBLIC_APPWRITE_PROJECT!)
     .setKey(process.env.APPWRITE_KEY!)
 
   return {
