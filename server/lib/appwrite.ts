@@ -1,5 +1,5 @@
 import type { H3Event } from 'h3'
-import { Account, Client } from 'node-appwrite'
+import { Account, Client, TablesDB } from 'node-appwrite'
 
 import { SESSION_COOKIE } from '../constants'
 
@@ -12,6 +12,9 @@ export function createAdminClient() {
   return {
     get account() {
       return new Account(client)
+    },
+    get tablesDB() {
+      return new TablesDB(client)
     }
   }
 }

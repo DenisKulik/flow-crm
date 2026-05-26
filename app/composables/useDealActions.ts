@@ -1,15 +1,18 @@
-import { DealsService } from '@/api'
 import type { IDealForm } from '@/types'
-
-const dealsService = new DealsService()
 
 export const useDealActions = () => {
   const createDeal = async (data: IDealForm) => {
-    await dealsService.createDeal(data)
+    await $fetch('/api/deals', {
+      method: 'POST',
+      body: data
+    })
   }
 
   const updateDeal = async (id: string, data: Partial<IDealForm>) => {
-    await dealsService.updateDeal(id, data)
+    await $fetch(`/api/deals/${id}`, {
+      method: 'PATCH',
+      body: data
+    })
   }
 
   return {

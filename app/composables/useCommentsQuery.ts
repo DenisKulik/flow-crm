@@ -1,10 +1,7 @@
-import { CommentService } from '@/api'
-
-const commentService = new CommentService()
+import type { CommentListDBType } from '@/types'
 
 export const useCommentsQuery = (dealId: string) => {
-  return useLazyAsyncData(`comments-${dealId}`, async () => commentService.getCommentsByDealId(dealId), {
-    server: false,
+  return useLazyAsyncData(`comments-${dealId}`, () => $fetch<CommentListDBType>(`/api/comments/${dealId}`), {
     transform: transformComments
   })
 }
