@@ -28,7 +28,7 @@ const formSchema = toTypedSchema(
     status: z.nativeEnum(DealStatus),
     customer: z.object({
       name: z.string().min(1).max(50),
-      email: z.string().email()
+      email: z.email()
     })
   })
 )

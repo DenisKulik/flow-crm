@@ -6,7 +6,7 @@ import { z } from 'zod'
 import type { ICustomerForm } from '@/types'
 
 interface Props {
-  data: ICustomerForm
+  data?: ICustomerForm
   status: string
   isAvatarUploading: boolean
 }
@@ -21,7 +21,7 @@ const $emit = defineEmits<{
 const formSchema = toTypedSchema(
   z.object({
     name: z.string().min(1).max(50),
-    email: z.string().email().max(50),
+    email: z.email().max(50),
     avatar_url: z.string().optional(),
     from_source: z.string().optional()
   })

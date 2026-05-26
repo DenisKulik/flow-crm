@@ -8,7 +8,7 @@ const $emit = defineEmits(['submit'])
 
 const formSchema = toTypedSchema(
   z.object({
-    email: z.string().email().max(50),
+    email: z.email().max(50),
     password: z.string().min(8).max(50)
   })
 )
