@@ -1,4 +1,4 @@
-import type { Models } from 'appwrite'
+import type { Models } from 'node-appwrite'
 
 import type { IBaseEntity, IComment, ICustomer } from '@/types'
 

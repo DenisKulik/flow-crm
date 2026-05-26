@@ -1,25 +1,29 @@
-import type { Models } from 'appwrite'
-import { nanoid } from 'nanoid'
+import type { Models } from 'node-appwrite'
 
-import { CustomersService } from '@/api'
-import { STORAGE_ID } from '@/constants'
 import type { ICustomerForm } from '@/types'
-
-const customersService = new CustomersService()
+import { STORAGE_ID } from '~~/server/constants'
 
 export const useCustomerActions = () => {
   const updateCustomer = async (id: string, data: ICustomerForm) => {
-    await customersService.updateCustomer(id, data)
+    await $fetch(`/api/customers/${id}`, {
+      method: 'PATCH',
+      body: data
+    })
   }
 
   const uploadCustomerAvatar = async (file: File): Promise<Models.File> => {
-    const fileId = nanoid()
-    const data = await customersService.uploadImage(fileId, file)
-    return data
+    const formData = new FormData()
+    formData.append('file', file)
+
+    return await $fetch<Models.File>('/api/storage/upload', {
+      method: 'POST',
+      body: formData
+    })
   }
 
   const getCustomerAvatarUrl = (fileId: string) => {
-    return customersService.getFileDownload(STORAGE_ID, fileId)
+    const origin = import.meta.client ? window.location.origin : ''
+    return `${origin}/api/storage/${STORAGE_ID}/${fileId}/preview`
   }
 
   return {
