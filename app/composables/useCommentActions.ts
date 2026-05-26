@@ -1,14 +1,15 @@
-import { CommentService } from '@/api'
-
-const commentService = new CommentService()
-
 export const useCommentActions = (dealId: string) => {
   const createComment = async (text: string) => {
-    await commentService.createComment(text, dealId)
+    await $fetch('/api/comments', {
+      method: 'POST',
+      body: { text, deal: dealId }
+    })
   }
 
   const deleteComment = async (commentId: string) => {
-    await commentService.deleteComment(commentId)
+    await $fetch(`/api/comments/${commentId}`, {
+      method: 'DELETE'
+    })
   }
 
   return {

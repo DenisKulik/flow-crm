@@ -1,6 +1,7 @@
-export const APP_WRITE_ID = 'flow-crm'
 export const DB_ID = '67e2a65b001be49d35b1'
 export const COLLECTION_DEALS = '67e2a6730023812e31e9'
 export const COLLECTION_CUSTOMERS = '67e2aaff001424e0b91e'
 export const COLLECTION_COMMENTS = '67e2a79b00230d0ccc09'
 export const STORAGE_ID = '67e2aba9002c212db399'
+
+export const SESSION_COOKIE = 'appwrite_session'

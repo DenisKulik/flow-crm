@@ -1,15 +1,12 @@
-import { AuthService } from '@/api'
 import { useAuthStore } from '@/stores/auth.store'
 import type { IUserForm, UserDBType } from '@/types'
-
-const authService = new AuthService()
 
 export const useAuth = () => {
   const authStore = useAuthStore()
 
   const getAuthUser = async (): Promise<UserDBType | null> => {
     try {
-      return await authService.getAuthUser()
+      return await $fetch<UserDBType>('api/auth/user')
     } catch {
       return null
     }
@@ -19,7 +16,10 @@ export const useAuth = () => {
     let user = await getAuthUser()
 
     if (!user) {
-      await authService.login(values)
+      await $fetch('/api/auth/login', {
+        method: 'POST',
+        body: values
+      })
       user = await getAuthUser()
     }
 
@@ -31,12 +31,17 @@ export const useAuth = () => {
   }
 
   const logout = async (): Promise<void> => {
-    await authService.logout()
+    await $fetch('api/auth/logout', {
+      method: 'DELETE'
+    })
     authStore.$reset()
   }
 
   const register = async (values: IUserForm): Promise<void> => {
-    await authService.register(values)
+    await $fetch('/api/auth/register', {
+      method: 'POST',
+      body: values
+    })
   }
 
   return {

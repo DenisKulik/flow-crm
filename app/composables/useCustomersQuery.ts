@@ -1,11 +1,7 @@
-import { CustomersService } from '@/api'
+import type { CustomerListDBType } from '@/types'
 
-const customersService = new CustomersService()
-
-// TODO: рефакторинг transform
 export const useCustomersQuery = () => {
-  return useLazyAsyncData('customers', async () => customersService.getCustomers(), {
-    server: false,
+  return useLazyAsyncData('customers', () => $fetch<CustomerListDBType>('/api/customers'), {
     transform: transformToCustomersTable
   })
 }

@@ -1,11 +1,8 @@
-import { DealsService } from '@/api'
 import { dealColumns } from '@/data'
-
-const dealsService = new DealsService()
+import type { DealListDBType } from '@/types'
 
 export const useDealsQuery = () => {
-  return useLazyAsyncData('deals', async () => await dealsService.getDeals(), {
-    server: false,
+  return useLazyAsyncData('deals', () => $fetch<DealListDBType>('/api/deals'), {
     default: () => dealColumns,
     transform: transformToBoard
   })

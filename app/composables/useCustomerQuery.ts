@@ -1,9 +1,5 @@
-import { CustomersService } from '@/api'
-
-const customersService = new CustomersService()
+import type { CustomerDBType } from '@/types'
 
 export const useCustomerQuery = (id: string) => {
-  return useLazyAsyncData(`customer-${id}`, async () => customersService.getCustomerById(id), {
-    server: false
-  })
+  return useLazyAsyncData(`customer-${id}`, () => $fetch<CustomerDBType>(`/api/customers/${id}`))
 }
