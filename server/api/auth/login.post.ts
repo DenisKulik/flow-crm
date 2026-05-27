@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
       path: '/',
       httpOnly: true,
       secure: true,
-      sameSite: 'strict'
+      sameSite: 'none'
     })
 
     return { success: true }
