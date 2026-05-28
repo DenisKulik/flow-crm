@@ -4,6 +4,7 @@ export const useDealActions = () => {
   const createDeal = async (data: IDealForm) => {
     await $fetch('/api/deals', {
       method: 'POST',
+      credentials: 'include',
       body: data
     })
   }
@@ -11,6 +12,7 @@ export const useDealActions = () => {
   const updateDeal = async (id: string, data: Partial<IDealForm>) => {
     await $fetch(`/api/deals/${id}`, {
       method: 'PATCH',
+      credentials: 'include',
       body: data
     })
   }

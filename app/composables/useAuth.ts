@@ -6,7 +6,9 @@ export const useAuth = () => {
 
   const getAuthUser = async (): Promise<UserDBType | null> => {
     try {
-      return await $fetch<UserDBType>('api/auth/user')
+      return await $fetch<UserDBType>('api/auth/user', {
+        credentials: 'include'
+      })
     } catch {
       return null
     }
@@ -18,6 +20,7 @@ export const useAuth = () => {
     if (!user) {
       await $fetch('/api/auth/login', {
         method: 'POST',
+        credentials: 'include',
         body: values
       })
       user = await getAuthUser()
@@ -32,6 +35,7 @@ export const useAuth = () => {
 
   const logout = async (): Promise<void> => {
     await $fetch('api/auth/logout', {
+      credentials: 'include',
       method: 'DELETE'
     })
     authStore.$reset()
@@ -40,6 +44,7 @@ export const useAuth = () => {
   const register = async (values: IUserForm): Promise<void> => {
     await $fetch('/api/auth/register', {
       method: 'POST',
+      credentials: 'include',
       body: values
     })
   }

@@ -22,7 +22,8 @@ export default defineEventHandler(async (event) => {
       path: '/',
       httpOnly: true,
       secure: true,
-      sameSite: 'none'
+      sameSite: 'none',
+      domain: process.env.NUXT_APP_DOMAIN ? `.${process.env.NUXT_APP_DOMAIN}` : undefined
     })
 
     return { success: true }
