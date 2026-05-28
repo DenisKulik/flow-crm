@@ -7,6 +7,7 @@ export const useCustomerActions = () => {
   const updateCustomer = async (id: string, data: ICustomerForm) => {
     await $fetch(`/api/customers/${id}`, {
       method: 'PATCH',
+      credentials: 'include',
       body: data
     })
   }
@@ -17,6 +18,7 @@ export const useCustomerActions = () => {
 
     return await $fetch<Models.File>('/api/storage/upload', {
       method: 'POST',
+      credentials: 'include',
       body: formData
     })
   }
