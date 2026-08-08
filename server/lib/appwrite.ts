@@ -4,10 +4,17 @@ import { Account, Client, Storage, TablesDB } from 'node-appwrite'
 import { SESSION_COOKIE } from '../constants'
 
 export function createAdminClient() {
-  const client = new Client()
-    .setEndpoint(process.env.NUXT_PUBLIC_APPWRITE_ENDPOINT!)
-    .setProject(process.env.NUXT_PUBLIC_APPWRITE_PROJECT!)
-    .setKey(process.env.APPWRITE_KEY!)
+  const endpoint = process.env.NUXT_PUBLIC_APPWRITE_ENDPOINT
+  const project = process.env.NUXT_PUBLIC_APPWRITE_PROJECT
+  const key = process.env.APPWRITE_KEY
+
+  if (!endpoint || !project || !key) {
+    throw new Error(
+      'Appwrite env vars are missing on the server (NUXT_PUBLIC_APPWRITE_ENDPOINT, NUXT_PUBLIC_APPWRITE_PROJECT, APPWRITE_KEY)'
+    )
+  }
+
+  const client = new Client().setEndpoint(endpoint).setProject(project).setKey(key)
 
   return {
     get account() {
