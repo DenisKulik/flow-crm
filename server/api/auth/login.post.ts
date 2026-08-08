@@ -18,6 +18,13 @@ export default defineEventHandler(async (event) => {
       password
     })
 
+    if (!session.secret) {
+      throw createError({
+        statusCode: 500,
+        statusMessage: 'Appwrite returned an empty session secret. Check that APPWRITE_KEY is configured.'
+      })
+    }
+
     setCookie(event, SESSION_COOKIE, session.secret, getSessionCookieOptions(event, session))
 
     return { success: true }
