@@ -2,6 +2,7 @@ import { ID } from 'node-appwrite'
 
 import { SESSION_COOKIE } from '~~/server/constants'
 import { createAdminClient } from '~~/server/lib/appwrite'
+import { getSessionCookieOptions } from '~~/server/lib/session-cookie'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
@@ -25,14 +26,7 @@ export default defineEventHandler(async (event) => {
       password
     })
 
-    setCookie(event, SESSION_COOKIE, session.secret, {
-      expires: new Date(session.expire),
-      path: '/',
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      domain: process.env.NUXT_APP_DOMAIN ? `.${process.env.NUXT_APP_DOMAIN}` : undefined
-    })
+    setCookie(event, SESSION_COOKIE, session.secret, getSessionCookieOptions(event, session))
 
     return { success: true }
   } catch {
