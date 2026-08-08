@@ -10,6 +10,12 @@ export function getSessionCookieOptions(event: H3Event, session: Models.Session)
     httpOnly: true,
     secure: isHttps,
     sameSite: 'lax' as const,
+    domain: getSessionCookieDomain(),
     expires: new Date(session.expire)
   }
+}
+
+export function getSessionCookieDomain() {
+  const domain = process.env.NUXT_APP_DOMAIN
+  return domain ? domain.replace(/^\./, '') : undefined
 }
