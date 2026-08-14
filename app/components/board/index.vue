@@ -3,6 +3,7 @@ import { DragDropProvider, type DragEndEvent } from '@dnd-kit/vue'
 
 import { useAppStore } from '@/stores/app.store'
 import { DealStatus, type ICard, type IDealForm, type IFormMethods } from '@/types'
+import { moveCardInBoard } from '~/utils/index'
 
 import BoardGrid from './BoardGrid.vue'
 import BoardHeader from './BoardHeader.vue'
@@ -59,15 +60,15 @@ const closeDealInfoDrawer = () => {
 const changeDealStatus = async (card: ICard, newStatus: DealStatus) => {
   if (card.status === newStatus) return
 
+  const prevStatus = card.status
+
+  board.value = moveCardInBoard(board.value, card.id, newStatus)
+
   try {
-    startLoading('change-deal-status')
     await updateDeal(card.id, { status: newStatus })
-    showSuccessToast(`Deal "${card.name}" moved to ${newStatus}`)
-    await refresh()
   } catch (error: unknown) {
+    board.value = moveCardInBoard(board.value, card.id, prevStatus)
     showErrorToast(error)
-  } finally {
-    stopLoading('change-deal-status')
   }
 }
 
