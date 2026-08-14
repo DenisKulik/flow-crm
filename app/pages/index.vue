@@ -3,7 +3,7 @@ import DealBoard from '@/components/board/index.vue'
 </script>
 
 <template>
-  <div class="w-full p-4 min-h-[calc(100vh-28px)]">
+  <div class="flex w-full flex-1 min-h-0 flex-col p-4 overflow-hidden">
     <DealBoard />
   </div>
 </template>

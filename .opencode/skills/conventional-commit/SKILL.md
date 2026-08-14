@@ -14,12 +14,14 @@ description: Use when committing changes or preparing a PR in this repo. Enforce
 ```
 
 Типы (Conventional Commits):
+
 - `feat` — новая функциональность
 - `fix` — исправление ошибки
 - `refactor` — рефакторинг без изменения функциональности
 - `chore` — рутинные задачи, сборка, зависимости
 
 Примеры:
+
 - `feat(board): add drag-n-drop reordering of deals`
 - `fix(api): validate deal status before update`
 - `refactor(auth): extract session cookie helper`

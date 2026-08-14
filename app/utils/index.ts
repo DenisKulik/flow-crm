@@ -46,6 +46,33 @@ export const getStatusColor = (status: DealStatus) => {
   return STATUS_COLORS[status] || '#6b7280'
 }
 
+export const moveCardInBoard = (board: IColumn[], cardId: string, newStatus: DealStatus): IColumn[] => {
+  const sourceColumn = board.find((column) => column.cards.some((card) => card.id === cardId))
+
+  if (!sourceColumn || sourceColumn.status === newStatus) {
+    return board
+  }
+
+  const card = sourceColumn.cards.find((item) => item.id === cardId)
+  if (!card) {
+    return board
+  }
+
+  const updatedCard = { ...card, status: newStatus }
+
+  return board.map((column) => {
+    if (column.status === sourceColumn.status) {
+      return { ...column, cards: column.cards.filter((item) => item.id !== cardId) }
+    }
+
+    if (column.status === newStatus) {
+      return { ...column, cards: [...column.cards, updatedCard] }
+    }
+
+    return column
+  })
+}
+
 export const transformToBoard = (data: DealListDBType): IColumn[] => {
   const board = structuredClone(dealColumns)
   const deals = data.rows as unknown as IDeal[]

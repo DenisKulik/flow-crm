@@ -6,7 +6,7 @@ import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 <template>
   <SidebarProvider>
     <AppSidebar />
-    <main class="w-full">
+    <main class="flex w-full flex-col">
       <SidebarTrigger />
       <slot />
     </main>

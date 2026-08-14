@@ -24,7 +24,7 @@ const openDealInfoDrawer = (deal: ICard): void => {
 </script>
 
 <template>
-  <div class="grid [grid-template-columns:repeat(5,1fr)] gap-6 min-h-[calc(100vh-140px)]">
+  <div class="grid flex-1 min-h-0 [grid-template-columns:repeat(5,1fr)] [grid-template-rows:minmax(0,1fr)] gap-6">
     <DealColumn
       v-for="column in board"
       :key="column.status"

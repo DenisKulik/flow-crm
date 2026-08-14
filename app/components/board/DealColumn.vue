@@ -32,7 +32,7 @@ const openCreateDealDialog = () => {
 <template>
   <div
     ref="root"
-    class="select-none rounded-xl bg-secondary p-4 min-h-[500px] flex flex-col transition-colors duration-200"
+    class="select-none rounded-xl bg-secondary p-4 flex flex-col overflow-hidden transition-colors duration-200"
     :class="{ 'ring-2 ring-primary/50': isDropTarget }"
   >
     <div class="flex items-center justify-between mb-3 border-b-2 pb-2" :style="{ borderColor: statusColorValue }">
@@ -44,7 +44,9 @@ const openCreateDealDialog = () => {
         </span>
       </div>
     </div>
-    <div class="space-y-3 flex-1">
+    <div
+      class="space-y-3 flex-1 min-h-0 overflow-y-auto scrollbar-thin scrollbar-thumb-secondary scrollbar-track-transparent"
+    >
       <template v-if="!isEmpty">
         <slot name="cards" :cards="column.cards" />
         <div class="flex justify-center">
