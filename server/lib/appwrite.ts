@@ -8,17 +8,13 @@ export function createAdminClient() {
   const project = process.env.NUXT_PUBLIC_APPWRITE_PROJECT
   const key = process.env.APPWRITE_KEY
 
-  const missing = (
-    [
-      ['NUXT_PUBLIC_APPWRITE_ENDPOINT', endpoint],
-      ['NUXT_PUBLIC_APPWRITE_PROJECT', project],
-      ['APPWRITE_KEY', key]
-    ] as const
-  )
-    .filter(([, value]) => !value)
-    .map(([name]) => name)
+  if (!endpoint || !project || !key) {
+    const missing = [
+      !endpoint ? 'NUXT_PUBLIC_APPWRITE_ENDPOINT' : null,
+      !project ? 'NUXT_PUBLIC_APPWRITE_PROJECT' : null,
+      !key ? 'APPWRITE_KEY' : null
+    ].filter((name): name is string => name !== null)
 
-  if (missing.length > 0) {
     throw createError({
       statusCode: 500,
       statusMessage: `Missing Appwrite env vars on the server: ${missing.join(', ')}`
