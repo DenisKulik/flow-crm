@@ -15,6 +15,7 @@ const appStore = useAppStore()
 const { startLoading, stopLoading } = appStore
 const { data: board, status, refresh, error } = useDealsQuery()
 const { createDeal, updateDeal } = useDealActions()
+const { notifyChange, listenChanges, close } = useBoardSync()
 
 const isOpenCreateDealDialog = ref<boolean>(false)
 const createDealStatus = ref<DealStatus>()
@@ -39,6 +40,7 @@ const createDealHandler = async (deal: IDealForm) => {
     await createDeal(deal)
     closeCreateDealDialog()
     showSuccessToast(`Deal "${deal.name}" created successfully`)
+    notifyChange()
     await refresh()
   } catch (error: unknown) {
     showErrorToast(error)
@@ -66,6 +68,7 @@ const changeDealStatus = async (card: ICard, newStatus: DealStatus) => {
 
   try {
     await updateDeal(card.id, { status: newStatus })
+    notifyChange()
   } catch (error: unknown) {
     board.value = moveCardInBoard(board.value, card.id, prevStatus)
     showErrorToast(error)
@@ -108,6 +111,19 @@ watch(isOpenCreateDealDialog, (newIsOpen) => {
       createDealStatus.value = undefined
     }, 300)
   }
+})
+
+let unsubscribe: (() => void) | undefined = undefined
+
+onMounted(() => {
+  unsubscribe = listenChanges(() => {
+    refresh()
+  })
+})
+
+onUnmounted(() => {
+  unsubscribe?.()
+  close()
 })
 </script>
 
