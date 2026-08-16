@@ -36,7 +36,8 @@ export default defineNuxtConfig({
     appwriteKey: process.env.APPWRITE_KEY,
     public: {
       appwriteEndpoint: process.env.NUXT_PUBLIC_APPWRITE_ENDPOINT,
-      appwriteProjectId: process.env.NUXT_PUBLIC_APPWRITE_PROJECT
+      appwriteProjectId: process.env.NUXT_PUBLIC_APPWRITE_PROJECT,
+      appUrl: process.env.NUXT_PUBLIC_APP_URL
     }
   }
 })

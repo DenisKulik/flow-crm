@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Github } from 'lucide-vue-next'
+
 import { useAppStore } from '@/stores/app.store'
 import type { IFormMethods, IUserForm } from '@/types'
 import { showErrorToast } from '@/utils'
@@ -40,7 +42,7 @@ const onRegister = async (values: IUserForm) => {
 
 <template>
   <div class="w-1/4 p-5 bg-sidebar rounded">
-    <UiTabs default-value="login" class="w-[400px]">
+    <UiTabs default-value="login" class="w-full">
       <UiTabsList class="grid w-full grid-cols-2">
         <UiTabsTrigger value="login">Login</UiTabsTrigger>
         <UiTabsTrigger value="register">Register</UiTabsTrigger>
@@ -52,5 +54,12 @@ const onRegister = async (values: IUserForm) => {
         <AuthRegisterForm ref="registerForm" @submit="onRegister" />
       </UiTabsContent>
     </UiTabs>
+    <UiSeparator class="my-3" />
+    <UiButton as-child variant="outline" class="w-full">
+      <a href="/api/auth/oauth/github">
+        <Github class="h-4 w-4" />
+        Login with GitHub
+      </a>
+    </UiButton>
   </div>
 </template>
